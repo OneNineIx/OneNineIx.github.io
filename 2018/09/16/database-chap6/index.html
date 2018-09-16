@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>데이터 조작언어의 종류(DML) | Joonseong H</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="database,MySQL,INSERT,UPDATE,DELETE,ORDER BY,GROUP BY,WHERE,HAVING,명령어" />
+    
+    <meta name="description" content="데이터 조작 언어(DML) 정의된 테이블에 레코드를 삽입,수정,삭제 및 검색하는데 사용되는 명령어의 집합명령어의 종류1234INSERT - 테이블 스키마에 적합한 레코드를 삽입UPDATE - 테이블에서 조건을 만족하는 특정 레코드의 컬럼값을 수정DELETE - 테이블에 조건을 만족하는 특정 레코드를 삭제SELECT - 조건을 만족하는 레코드를 테이블에서 검">
+<meta name="keywords" content="database,MySQL,INSERT,UPDATE,DELETE,ORDER BY,GROUP BY,WHERE,HAVING,명령어">
+<meta property="og:type" content="article">
+<meta property="og:title" content="데이터 조작언어의 종류(DML)">
+<meta property="og:url" content="http://OneNineIx.github.io/2018/09/16/database-chap6/index.html">
+<meta property="og:site_name" content="Joonseong H">
+<meta property="og:description" content="데이터 조작 언어(DML) 정의된 테이블에 레코드를 삽입,수정,삭제 및 검색하는데 사용되는 명령어의 집합명령어의 종류1234INSERT - 테이블 스키마에 적합한 레코드를 삽입UPDATE - 테이블에서 조건을 만족하는 특정 레코드의 컬럼값을 수정DELETE - 테이블에 조건을 만족하는 특정 레코드를 삭제SELECT - 조건을 만족하는 레코드를 테이블에서 검">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+<meta property="og:updated_time" content="2018-09-16T12:11:29.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="데이터 조작언어의 종류(DML)">
+<meta name="twitter:description" content="데이터 조작 언어(DML) 정의된 테이블에 레코드를 삽입,수정,삭제 및 검색하는데 사용되는 명령어의 집합명령어의 종류1234INSERT - 테이블 스키마에 적합한 레코드를 삽입UPDATE - 테이블에서 조건을 만족하는 특정 레코드의 컬럼값을 수정DELETE - 테이블에 조건을 만족하는 특정 레코드를 삭제SELECT - 조건을 만족하는 레코드를 테이블에서 검">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicons/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">IT blog / Thanks to everyone!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://onenineix.github.io/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/markdown/">markdown</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/">programing</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/database/">database</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/javascript/">javascript</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/mybatis/">mybatis</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/">database</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-database-chap6" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        데이터 조작언어의 종류(DML)
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/09/16/database-chap6/" class="article-date">
+            <time datetime="2018-09-16T11:55:11.000Z" itemprop="datePublished">2018-09-16</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/DELETE/">DELETE</a>, <a class="tag-link" href="/tags/GROUP-BY/">GROUP BY</a>, <a class="tag-link" href="/tags/HAVING/">HAVING</a>, <a class="tag-link" href="/tags/INSERT/">INSERT</a>, <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/ORDER-BY/">ORDER BY</a>, <a class="tag-link" href="/tags/UPDATE/">UPDATE</a>, <a class="tag-link" href="/tags/WHERE/">WHERE</a>, <a class="tag-link" href="/tags/database/">database</a>, <a class="tag-link" href="/tags/명령어/">명령어</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="데이터-조작-언어-DML"><a href="#데이터-조작-언어-DML" class="headerlink" title="데이터 조작 언어(DML)"></a>데이터 조작 언어(DML)</h1><ul>
+<li>정의된 테이블에 레코드를 삽입,수정,삭제 및 검색하는데 사용되는 명령어의 집합<h4 id="명령어의-종류"><a href="#명령어의-종류" class="headerlink" title="명령어의 종류"></a>명령어의 종류</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT - 테이블 스키마에 적합한 레코드를 삽입</span><br><span class="line">UPDATE - 테이블에서 조건을 만족하는 특정 레코드의 컬럼값을 수정</span><br><span class="line">DELETE - 테이블에 조건을 만족하는 특정 레코드를 삭제</span><br><span class="line">SELECT - 조건을 만족하는 레코드를 테이블에서 검색</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="INSERT문"><a href="#INSERT문" class="headerlink" title="INSERT문"></a>INSERT문</h4><ul>
+<li>테이블에 일부 또는 전체 컬럼에 컬럼값을 직접 입력하여 레코드를 삽입하고자 할 때 사용하는 명령문이다.</li>
+</ul>
+<p><strong>구문 형식1</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 테이블명[(컬럼1,컬럼2,...)]// 컬럼의 일부를 수정할 때에는 컬럼명과 값을 모두 입력해야함</span><br><span class="line">    VALUES(값1,값2,...)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 교수(교수번호, 소속학과, 교수이름, 직위, 전화번호, 입사일)</span><br><span class="line">    VALUES(&apos;CO07&apos;, &apos;컴퓨터과학과&apos;,&apos;정민용&apos;,&apos;부교수&apos;,&apos;020-1905-9994&apos;,&apos;2013-05-06&apos;);</span><br><span class="line">SELECT * FROM 교수;</span><br></pre></td></tr></table></figure>
+<p><strong>구문 형식2</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 테이블명 (컬럼생략) // 컬럼의 갯수와 값의 갯수가 똑같을때에 컬럼의 입력을 생략할 수 있다.</span><br><span class="line">    VALUES(값1, 값2...)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 학생</span><br><span class="line">    VALUES( &apos;201483327&apos;,&apos;유아교육과&apos;,&apos;박원장&apos;,1,&apos;남&apos;,25,&apos;020-9972-4412&apos;,&apos;제주시 노형동&apos;);</span><br><span class="line"></span><br><span class="line">SELECT * FROM 학생;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 졸업예정자</span><br><span class="line">    SELECT * FROM 학생 WHERE 학년=4;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 졸업예정자;</span><br></pre></td></tr></table></figure>
+<h4 id="UPDATE문"><a href="#UPDATE문" class="headerlink" title="UPDATE문"></a>UPDATE문</h4><ul>
+<li>테이블 내에 존재하는 일부 또는 전체 레코드의 컬럼값을 수정할 때 사용하는 명령어</li>
+</ul>
+<p><strong>구문형식1</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 테이블이름</span><br><span class="line">    SET 컬럼1=값1 ,컬럼2=값2,...</span><br><span class="line">    WHERE 조건  // 생략시 테이블에 존재하는 전체 레코드에 대해서 이 컬럼값이 이 값으로 바뀌게 된다</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET SQL_SAFE_UPDATES = 0; 저런것을 방지하는 모드를 껐다.</span><br><span class="line"></span><br><span class="line">UPDATE 강의</span><br><span class="line">    SET 인원제한 = 100; WHERE절이 없어서 인원제한 컬럼의 전체 레코드값이 100으로 변경된다.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 학생</span><br><span class="line">    SET 주소 = &apos;서울시 강남구&apos;</span><br><span class="line">    WHERE 학생번호 = &apos;201434027&apos;;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 학생</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 강의</span><br><span class="line">    SET 강의번호 =&apos;CO20&apos; //강의번호가 FOREIGN KEY이므로 SET할 수 없다. 강의번호를 참조하고 있는 수강신청 테이블이 있기 때문이다.</span><br><span class="line">    WHERE 강의이름 =&apos;자료구조&apos;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 강의</span><br></pre></td></tr></table></figure>
+<p><strong>구문형식2</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 테이블이름</span><br><span class="line">    SET 컬럼1=수식1,수식2,....</span><br><span class="line">    WHERE 조건</span><br></pre></td></tr></table></figure></p>
+<p><strong>구문형식3</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 테이블이름</span><br><span class="line">    SET 컬럼1=(SELECT 컬럼 FROM 테이블이름)</span><br><span class="line">    // 괄호에 있는 명령문이 먼저 처리가 되고 그 값이 지정된 컬럼에 값이 들어간다.</span><br><span class="line">    WHERE 조건</span><br></pre></td></tr></table></figure></p>
+<h4 id="DELETE-문"><a href="#DELETE-문" class="headerlink" title="DELETE 문"></a>DELETE 문</h4><ul>
+<li>조건에 일치하는 레코드 집합을 테이블에서 삭제할 때 사용하는 명령어<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DELETE FROM 테이블명</span><br><span class="line">    WHERE 조건</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">졸업예정자 테이블에 있는 모든 레코드를 삭제하시오</span><br><span class="line"></span><br><span class="line">SET SQL_SAFE_UPDATES=0;</span><br><span class="line"></span><br><span class="line">DELETE FROM 졸업예정자;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 졸업예정자;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">수강신청 테이블에서 신청시각이 2014년 2월 28일 이후인 레코드를 삭제하시오.</span><br><span class="line"></span><br><span class="line">DELETE FROM 수강신청</span><br><span class="line">    WHERE 신청시각 &gt;= &apos;2014-03-01 00:00:00&apos;;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 수강신청;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">강의 테이블에서 강의번호가 MN09인 테이블을 삭제하시오</span><br><span class="line">DELETE FROM 강의</span><br><span class="line">    WHERE 강의번호 = &apos;MN09&apos;; 강의번호가 MN09인 강의를 수강신청 테이블에서 참조하고 있어서 삭제할 수 없다.(참조무결성제약조건)이럴때에는 수강신청정보가 삭제된 이후에 삭제가 가능하다.</span><br><span class="line"></span><br><span class="line">SELECT * FROM 강의</span><br></pre></td></tr></table></figure>
+<h3 id="SAFE-UPDATES-모드"><a href="#SAFE-UPDATES-모드" class="headerlink" title="SAFE UPDATES 모드"></a>SAFE UPDATES 모드</h3><ul>
+<li>MySQL워크벤치의 기능이다.</li>
+<li>WHERE이 없는 UPDATE/DELETE문은 테이블의 전체 레코드를 변경/삭제</li>
+<li>의도하지 않은 데이터 변경/삭제를 방지하기 위해 MySQL 워크벤치는 SAFE UPDATES모드를 지원</li>
+<li>기본키가 아닌 컬럼을 대상으로 수정/삭제 조건을 명시할 경우 실행 여부를 결정(WHERE 절이 없는 SELECT 문 포함)</li>
+</ul>
+<h4 id="SAFE-UPDATES-모드-설정-방법"><a href="#SAFE-UPDATES-모드-설정-방법" class="headerlink" title="SAFE UPDATES 모드 설정 방법"></a>SAFE UPDATES 모드 설정 방법</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET SQL_SAFE_UPDATES = 0또는 1 //0은 꺼짐, 1은 켜짐</span><br></pre></td></tr></table></figure>
+<h4 id="SELECT문"><a href="#SELECT문" class="headerlink" title="SELECT문"></a>SELECT문</h4><ul>
+<li>주어진 조건에 만족하는 레코드를 선택하여 출력하는 SELECT문은 관계 대수의 셀렉션, 프로젝셔느 조인, 카티션 프로덕트 연산자의 기능을 모두 포함하는 명령문</li>
+<li>기초적인 SELECT 절과 FROM 절로 기본 SELECT 문을 구성하고 부가적인 목적으로 사용할 수 있는 여러 절을 혼합하여 검색기능을 구체화</li>
+</ul>
+<p><strong>구문형식</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT [DISTINCT] 컬럼명1, 컬럼명2,...</span><br><span class="line">    FROM 테이블1 [INNER JOIN | OUTER JOIN</span><br><span class="line">                테이블2, INNER JOIN | OUTER JOIN</span><br><span class="line">                ..., INNER JOIN | OUTER JOIN</span><br><span class="line">                테이블m]</span><br><span class="line">    [ON 조인 조건식]</span><br><span class="line">    [WHERE 조건식[중첩질의]]</span><br><span class="line">    [GROUP BY 컬럼명1, 컬럼명2,...</span><br><span class="line">        [HAVING 조건식]]</span><br><span class="line">    [ORDER BY 컬럼명1, 컬럼명2,...[ASC|DESC]];</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>SELECT 절 - 결과에 포함되는 컬럼을 지정</li>
+<li>FROM 절 - 질의를 적용할 테이블을 지정</li>
+<li>ON/WHERE 절 - 레코드가 만족해야할 절은 WHERE절에 기술하고, 두 개이상의 테이블에서 레코드를 결합시켜서 가지고오는 JOIN연산의 조건을 기술할때 ON절을 사용한다.</li>
+<li>GROUP BY 절 - 레코드를 그룹화 하기 위한 그룹조건을 지정 (여러개의 레코드를 특정조건에 만족하는 레코드를 그룹지어서 여러가지 통계적인 연산을 할때 사용하는 형태)</li>
+<li>HAVING 절 - GROUP BY 절이 적용된 결과에 대한 조건을 지정</li>
+<li>ORDER BY 절 - 검색 결과의 정렬 기준을 지정</li>
+</ul>
+<blockquote>
+<p>참고자료<br>데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원</p>
+</blockquote>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://OneNineIx.github.io/2018/09/16/database-chap6/" data-id="cjm4tpw2w00049sva8jmj6t6s" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:onenineix@gmail.com" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/16/database-chap7/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            database_chap7
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/09/16/database-index/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">database_index</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/16/database-chap7/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/16/database-chap7/" class="title">database_chap7</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T12:12:23.000Z" itemprop="datePublished">2018-09-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/16/database-chap6/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="데이터 조작언어의 종류(DML)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/16/database-chap6/" class="title">데이터 조작언어의 종류(DML)</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T11:55:11.000Z" itemprop="datePublished">2018-09-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/16/database-index/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="database_index" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/16/database-index/" class="title">database_index</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T11:37:16.000Z" itemprop="datePublished">2018-09-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/16/database-chap5/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="제약조건과 인덱스의 사용목적" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/16/database-chap5/" class="title">제약조건과 인덱스의 사용목적</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T11:27:21.000Z" itemprop="datePublished">2018-09-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/16/database-forward/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL database forward" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/16/database-forward/" class="title">MySQL database forward</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T10:51:28.000Z" itemprop="datePublished">2018-09-16</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/B-트리-인덱스/" style="font-size: 15px;">B+-트리 인덱스</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 10px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/INDEX/" style="font-size: 15px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 15px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 JSH</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'onenineix';
+    
+    
+    var disqus_url = 'http://OneNineIx.github.io/2018/09/16/database-chap6/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
