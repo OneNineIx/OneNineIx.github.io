@@ -6,23 +6,26 @@
     
 
     
-    <title>database_chap11 | Joonseong H</title>
+    <title>저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR) | Joonseong H</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="" />
+        <meta name="keywords" content="database,MySQL" />
     
-    <meta name="description" content="using Hexo">
+    <meta name="description" content="목차     1. 저장 프로그램의 개념2. 변수 선언(DECLARE)과 할당3. 저장프로시저의 개념4. IF 문5. CASE 문6. WHILE 문7. REPEAT 문8. LOOP 문9. 예제활용     저장 프로그램의 개념 SQL은 비절차적 언어로 일반 프로그래밍 언어와 달리 실행 흐름을 제어하는 기능 불포함 변수 및 선택문, 반복분과 같은 제어문">
+<meta name="keywords" content="database,MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="database_chap11">
+<meta property="og:title" content="저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)">
 <meta property="og:url" content="http://OneNineIx.github.io/2018/09/17/database-chap11/index.html">
 <meta property="og:site_name" content="Joonseong H">
-<meta property="og:description" content="using Hexo">
+<meta property="og:description" content="목차     1. 저장 프로그램의 개념2. 변수 선언(DECLARE)과 할당3. 저장프로시저의 개념4. IF 문5. CASE 문6. WHILE 문7. REPEAT 문8. LOOP 문9. 예제활용     저장 프로그램의 개념 SQL은 비절차적 언어로 일반 프로그래밍 언어와 달리 실행 흐름을 제어하는 기능 불포함 변수 및 선택문, 반복분과 같은 제어문">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-16T17:16:24.041Z">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+<meta property="og:updated_time" content="2018-09-16T17:45:55.822Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="database_chap11">
-<meta name="twitter:description" content="using Hexo">
+<meta name="twitter:title" content="저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)">
+<meta name="twitter:description" content="목차     1. 저장 프로그램의 개념2. 변수 선언(DECLARE)과 할당3. 저장프로시저의 개념4. IF 문5. CASE 문6. WHILE 문7. REPEAT 문8. LOOP 문9. 예제활용     저장 프로그램의 개념 SQL은 비절차적 언어로 일반 프로그래밍 언어와 달리 실행 흐름을 제어하는 기능 불포함 변수 및 선택문, 반복분과 같은 제어문">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
     
 
     
@@ -131,7 +134,7 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/">database</a>
     </h1>
 </div>
 
@@ -143,7 +146,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-        database_chap11
+        저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)
         </h1>
     
 
@@ -161,18 +164,176 @@
 		
 
                 
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/database/">database</a>
+    </div>
+
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            
+            <hr>
+<p><a id="chap-0"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">목차</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="#chap-1">1. 저장 프로그램의 개념</a><br><a href="#chap-2">2. 변수 선언(DECLARE)과 할당</a><br><a href="#chap-3">3. 저장프로시저의 개념</a><br><a href="#chap-4">4. IF 문</a><br><a href="#chap-5">5. CASE 문</a><br><a href="#chap-6">6. WHILE 문</a><br><a href="#chap-7">7. REPEAT 문</a><br><a href="#chap-8">8. LOOP 문</a><br><a href="#chap-9">9. 예제활용</a></td>
+</tr>
+</tbody>
+</table>
+<p><a id="chap-1"></a></p>
+<h2 id="저장-프로그램의-개념"><a href="#저장-프로그램의-개념" class="headerlink" title="저장 프로그램의 개념"></a>저장 프로그램의 개념</h2><ul>
+<li>SQL은 비절차적 언어로 일반 프로그래밍 언어와 달리 실행 흐름을 제어하는 기능 불포함</li>
+<li>변수 및 선택문, 반복분과 같은 제어문의 기능을 추가하고 프로그램의 형태로 DBMS 내부에 하나의 데이터베이스 객체로 저장되어 관리<ul>
+<li>저장 프로시저</li>
+<li>함수</li>
+<li>트리거</li>
+<li>커서</li>
+</ul>
+</li>
+</ul>
+<h4 id="저장-프로그램의-장단점"><a href="#저장-프로그램의-장단점" class="headerlink" title="저장 프로그램의 장단점"></a>저장 프로그램의 장단점</h4><p>장점</p>
+<ul>
+<li>네트워크 전송 효율 향상</li>
+<li>실행속도의 효율성 향상</li>
+<li>모듈화 기능 (객체를 하나하나 묶어서 또다른 기능을 사용가능하게 한다)</li>
+<li>보안 향상 (악의적인 사용자가 테이블의 구체적인 구조를 모르게 할 수있다.)</li>
+</ul>
+<p>단점</p>
+<ul>
+<li>낮은 처리 성능</li>
+<li>디버깅 기능 제한</li>
+</ul>
+<p><a id="chap-2"></a></p>
+<h4 id="변수-선언-DECLARE-과-할당"><a href="#변수-선언-DECLARE-과-할당" class="headerlink" title="변수 선언(DECLARE)과 할당"></a>변수 선언(DECLARE)과 할당</h4><ul>
+<li>저장프로그램이 실행되는 동안, 데이터를 임시적으로 저장하도록 할당된 메모리 공간<ul>
+<li>사용자 정의변수 - 저장프로그램 외부에서 사용 이름이 @ 로 시작하며 데이터 타입이 미지정</li>
+<li>로컬 변수 - 저장 프로그램 내부에서 사용 DECLARE 명령을 사용하여 선언<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DECLARE 변수_이름[ ,...] 데이터 타입[(크기)]</span><br><span class="line">    [DEFAULT 기본값]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>할당</strong></p>
+<ul>
+<li>정의된 변수에 값을 할당하기 위해서 <u>SET 명령 또는 SELECT INTO 문을 사용</u><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식 1</span><br><span class="line">SET 변수_이름 = 값</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">구문형식 2</span><br><span class="line">SELECT 컬럼또는함수 INTO 변수_이름</span><br><span class="line">    FROM 테이블    // 할당하려는 값이 테이블에 있을때는 SELECT INTO구문을 사용한다.</span><br><span class="line">    [WHERE 조건]</span><br></pre></td></tr></table></figure>
+<p><a id="chap-3"></a></p>
+<h2 id="저장프로시저의-개념"><a href="#저장프로시저의-개념" class="headerlink" title="저장프로시저의 개념"></a>저장프로시저의 개념</h2><ul>
+<li>여러 가지 응용 작업 중 자주 사용되거나 복잡한 과정을 거치는 SQL 문을 저장하여 하나의 객체로 관리하는 기능 = 루틴(routine)<ul>
+<li>함수와 달리 이름을 이용하여 값을 반환하지 않음</li>
+<li>매개변수를 받아 들이거나 반환</li>
+<li>프로시저 내에서 또 다른 프로시저를 호출</li>
+<li>실행과 관련된 결과값과 메시지를 반환<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DELIMITER $$</span><br><span class="line">CREATE</span><br><span class="line">    [DEFINER=&#123;사용자|현재사용자&#125;]</span><br><span class="line">    PROCEDURE 프로시저_이름</span><br><span class="line">    ([매개변수[ ,...]])</span><br><span class="line">    BEGIN</span><br><span class="line">        SQL 문...;</span><br><span class="line">    END $$</span><br><span class="line">DELIMITER;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="저장-프로시저의-호출"><a href="#저장-프로시저의-호출" class="headerlink" title="저장 프로시저의 호출"></a>저장 프로시저의 호출</h4><ul>
+<li>저장 프로시저는 독립적으로 사용</li>
+<li>SELELCT나 UPDATE같은 <u>SQL문에서 호출 불가능</u></li>
+<li>별도의 <strong>CALL</strong> 명령어를 사용<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">CALL 프로시저_이름[([매개변수[ ,...]])]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="저장-프로시저의-관리"><a href="#저장-프로시저의-관리" class="headerlink" title="저장 프로시저의 관리"></a>저장 프로시저의 관리</h4><ul>
+<li>수정은 ALTER PROCEDURE 명령 사용<ul>
+<li>저장 프로시저의 보안 및 동작 방식에 대한 속성을 변경할 때만 사용</li>
+</ul>
+</li>
+<li>저장 프로시저의 <u>정의 수정은 DROP 후 CREATE 문으로 새롭게 생성</u></li>
+<li>삭제는 DROP PROCEDURE 문 사용<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DROP PROCEDURE 프로시저_이름</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="매개변수"><a href="#매개변수" class="headerlink" title="매개변수"></a>매개변수</h4><ul>
+<li>실행 시, 외부로부터 값을 받거나, 실행 후 반환되는 값을 저장<ul>
+<li><strong>IN</strong> 매개변수 - 호출 시 필요간 값을 저장 프로시저에 전달</li>
+<li><strong>OUT</strong> 매개변수 - 저장 프로시저에서 실행한 값을 호출한 곳으로 전달</li>
+<li><strong>INOUT</strong> 매개변수 - IN과 OUT의 기능을 모두 수행</li>
+</ul>
+</li>
+</ul>
+<h4 id="절차의-표현"><a href="#절차의-표현" class="headerlink" title="절차의 표현"></a>절차의 표현</h4><ul>
+<li>선택문<ul>
+<li>주어진 명령문을 조건에 따라 실행 여부를 결정</li>
+<li><strong>MySQL은 IF-ELSEIF-ELSE, CASE 문을 제공</strong></li>
+<li>중첩을 통해 보다 상세한 조건 결정 가능</li>
+</ul>
+</li>
+<li>반복문<ul>
+<li>주어진 명령문을 특정 횟수만큼 반복</li>
+<li><strong>MySQL은 WHILE, REPEAT, LOOP문을 제공</strong></li>
+<li>반복문 제어를 위해 <u>LEAVE와 ITERATE 문을 사용</u></li>
+</ul>
+</li>
+</ul>
+<p><a id="chap-4"></a></p>
+<h4 id="IF-문"><a href="#IF-문" class="headerlink" title="IF 문"></a>IF 문</h4><ul>
+<li>주어진 조건이나 식의 값에 따라 SQL문의 실행 여부를 선택적으로 결정<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">IF 조건식 THEN</span><br><span class="line">      SQL문</span><br><span class="line">[ELSEIF 조건식 THEN</span><br><span class="line">      SQL문]</span><br><span class="line">[ELSE</span><br><span class="line">      SQL문]</span><br><span class="line">END IF;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a id="chap-5"></a></p>
+<h4 id="CASE-문"><a href="#CASE-문" class="headerlink" title="CASE 문"></a>CASE 문</h4><ul>
+<li>조건식이 다수의 조건으로 표현되는 문제에 대해 다중 IF-ELSEIF 문을 축약하는 제어문<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">CASE 변수</span><br><span class="line">    WHEN 비교변수값1 THEN SQL문</span><br><span class="line">    [WHEN 비교변수값2 THEN SQL문]</span><br><span class="line">    ...</span><br><span class="line">    [ELSE SQL문]</span><br><span class="line">END CASE;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a id="chap-6"></a></p>
+<h4 id="WHILE-문"><a href="#WHILE-문" class="headerlink" title="WHILE 문"></a>WHILE 문</h4><ul>
+<li>반복 루프의 조건식이 참일 경우 DO와 END WHILE 사이의 SQL문을 실행하고 거짓일 경우 반복 종료<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">WHILE 조건식 DO</span><br><span class="line">    SQL문;</span><br><span class="line">END WHILE;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a id="chap-7"></a></p>
+<h4 id="REPEAT-문"><a href="#REPEAT-문" class="headerlink" title="REPEAT 문"></a>REPEAT 문</h4><ul>
+<li>UNTIL 조건식이 거짓인 동안에 REPEAT와 UNTL 사이의 SQL 문을 반복<ul>
+<li>WHILE 문은 조건이 참인 동안, REPEAT는 거짓인 동안 반복</li>
+<li>SQL 문을 최소한 한번은 실행한 다음에 조건식을 판단</li>
+<li>DO WHILE문과 비슷하다<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">REPEAT</span><br><span class="line">    SQL문;</span><br><span class="line">UNTIL 조건식</span><br><span class="line">END REPEAT;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p><a id="chap-8"></a></p>
+<h4 id="LOOP-문"><a href="#LOOP-문" class="headerlink" title="LOOP 문"></a>LOOP 문</h4><ul>
+<li>LABLE을 이용하여 반복 블록의 생성하여 반복 후, LEAVE 문을 통해 반복을 종료</li>
+<li>ITERATE 문을 만나면 이후에 나온 코드는 실행하지 않고 반복을 처음부터 실행<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">레이블_이름:LOOP</span><br><span class="line">    SQL문;</span><br><span class="line">    IF 조건 THEN LEAVE 레이블_이름;</span><br><span class="line">END LOOP;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a id="chap-9"></a></p>
+<h2 id="예제활용"><a href="#예제활용" class="headerlink" title="예제활용"></a>예제활용</h2><h5 id="‘학생’테이블에서-모든-학생의-정보를-출력하는-GetAllStudent라고-하는-저장-프로시저를-생성하시오"><a href="#‘학생’테이블에서-모든-학생의-정보를-출력하는-GetAllStudent라고-하는-저장-프로시저를-생성하시오" class="headerlink" title="‘학생’테이블에서 모든 학생의 정보를 출력하는 GetAllStudent라고 하는 저장 프로시저를 생성하시오"></a>‘학생’테이블에서 모든 학생의 정보를 출력하는 GetAllStudent라고 하는 저장 프로시저를 생성하시오</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE PROCEDURE GetAllStudent()</span><br><span class="line">    BEGIN</span><br><span class="line">        SELECT * FROM 학생;  // 명령문의 끝에 세미콜론을 붙여주면 이 명령문의 끝인지 함수의 끝인지 구분할 수 없다.</span><br><span class="line">    END $$</span><br><span class="line">DELIMITER ; // 그래서 DELEMETER를 사용해 함수의끝은 END$$로 마무리해주고 명령문의 끝과 DELIMITER 끝에는 세미콜론을 붙여 구분해준다</span><br></pre></td></tr></table></figure>
+<h5 id="프로시저의-실행방법"><a href="#프로시저의-실행방법" class="headerlink" title="프로시저의 실행방법"></a>프로시저의 실행방법</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL GetAllStudent();</span><br></pre></td></tr></table></figure>
+<h5 id="프로시저의-삭제방법"><a href="#프로시저의-삭제방법" class="headerlink" title="프로시저의 삭제방법"></a>프로시저의 삭제방법</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP PROCEDURE GetAllStudent;</span><br></pre></td></tr></table></figure>
+<h5 id="주어진-학년에-해당하는-학생의-정보를-출력하는-GetStudentByGrade라고-하는-저장-프로시저를-생성하시오"><a href="#주어진-학년에-해당하는-학생의-정보를-출력하는-GetStudentByGrade라고-하는-저장-프로시저를-생성하시오" class="headerlink" title="주어진 학년에 해당하는 학생의 정보를 출력하는 GetStudentByGrade라고 하는 저장 프로시저를 생성하시오"></a>주어진 학년에 해당하는 학생의 정보를 출력하는 GetStudentByGrade라고 하는 저장 프로시저를 생성하시오</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE PROCEDURE GetStudentByGrade( // 매개변수를 입력</span><br><span class="line">    IN grade INT(4)) // 입력에 대한 매개변수이므로 IN (변수명) (타입)을 입력해준다</span><br><span class="line">    BEGIN</span><br><span class="line">        SELECT * FROM 학생 WHERE 학년 = grade; // 사용자가 입력한 grade라고 하는 입력 매개변수에 들어있는 값과 똑같은 것만 가져와라</span><br><span class="line">    END$$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<h5 id="매개변수를-사용한-프로시저의-실행"><a href="#매개변수를-사용한-프로시저의-실행" class="headerlink" title="매개변수를 사용한 프로시저의 실행"></a>매개변수를 사용한 프로시저의 실행</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL GetStudentByGrade(1);  //매개변수에 1을 입력해서 출력하고있다.</span><br></pre></td></tr></table></figure>
+<h5 id="‘강의’테이블의-강의-레코드에서-인원제한이-80보다-클-경우-‘대강의실’-40이상-80이하일-경우-‘중강의실’-그외에는-‘소강의실’을-반환하는-저장-프로시저를-생성하시오"><a href="#‘강의’테이블의-강의-레코드에서-인원제한이-80보다-클-경우-‘대강의실’-40이상-80이하일-경우-‘중강의실’-그외에는-‘소강의실’을-반환하는-저장-프로시저를-생성하시오" class="headerlink" title="‘강의’테이블의 강의 레코드에서 인원제한이 80보다 클 경우 ‘대강의실’, 40이상 80이하일 경우 ‘중강의실’, 그외에는 ‘소강의실’을 반환하는 저장 프로시저를 생성하시오"></a>‘강의’테이블의 강의 레코드에서 인원제한이 80보다 클 경우 ‘대강의실’, 40이상 80이하일 경우 ‘중강의실’, 그외에는 ‘소강의실’을 반환하는 저장 프로시저를 생성하시오</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE PROCEDURE GetClassLevel( // 함수명과 매개변수 설정</span><br><span class="line">    IN p_ClassNumber char(4),  // 사용자가 입력하는 IN매개변수(강의번호)</span><br><span class="line">    OUT p_ClassLevel  varchar(20)) // 출력 결과 값이 저장되는 OUT매개변수</span><br><span class="line"></span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE classlimit int;  // classlimit 이라는 변수를 만들고</span><br><span class="line"></span><br><span class="line">    SELECT 인원제한 INTO classlimit FROM 강의 //인원제한 컬럼만을 가져오고 그것을 classlimit이라는 변수에 집어넣겠다</span><br><span class="line">        WHERE 강의번호 = p_ClassNumber; //사용자가 입력한 강의번호와 같은 강의레코드를 가져오는데</span><br><span class="line"></span><br><span class="line">    IF classlimit &gt;= 80 THEN  // 변수에 담긴 인원제한 컬럼값이 80이상이면</span><br><span class="line">        SET p_ClassLevel = &apos;대강의실&apos;;  //p_ClassLevel OUT매개변수에 &apos;대강의실&apos;을 결과값으로 저장</span><br><span class="line"></span><br><span class="line">    ELSEIF (classlimit &lt; 80 AND classlimit &gt;= 40) THEN</span><br><span class="line">        SET p_ClassLevel = &apos;중강의실&apos;;</span><br><span class="line"></span><br><span class="line">    ELSE</span><br><span class="line">        SET p_ClassLevel = &apos;소강의실&apos;;</span><br><span class="line"></span><br><span class="line">    END IF;</span><br><span class="line"></span><br><span class="line">END$$</span><br><span class="line"></span><br><span class="line">DELIMITER ;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### 프로시저의 실행</span><br></pre></td></tr></table></figure>
+<p>CALL GetClassLevel(‘CO21’, @level);  // GetClassLevel프로시저에 강의번호’CO21’을 매개변수로 넣고 , 그 값을 사용자가 지정하는 변수@level에 담는다</p>
+<p>SELECT @level; // 그리고 사용자가 지정한 변수로 조회하면 된다.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### 정수 p_num과 p_sum을 매개변수로 받아서 1부터 p_num까지의 합을 p_sum에 저장하는 저장프로시저를 생성하시오</span><br></pre></td></tr></table></figure></p>
+<p>DELIMITER $$<br>CREATE PROCEDURE WhileLoopProc(<br>    IN p_num int(4), // 사용자에게 입력받는 값까지의 합을 구할것이다.<br>    OUT p_sum INT(4))</p>
+<p>BEGIN<br>    DECLARE x INT;  // 일종의 로컬변수 x를 만들고<br>    SET x = 1;    // x에 1로 초기화<br>    SET p_sum = 0;        // 사용자에게 전달할 최종 출력값이 될 변수 p_sum에는 일단 0으로 초기화한다.</p>
+<pre><code>WHILE x &lt;= p_num DO  // x가 사용자가 입력한 p_num값보다 클떄까지
+    SET p_sum = p_sum + x;  // 두 로직을 반복한다
+    SET x = x + 1;
+END WHILE;
+</code></pre><p>END$$<br>DELIMITER ;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### 해당 프로시저를 실행해보자</span><br></pre></td></tr></table></figure></p>
+<p>CALL WhileLoopProc(10, @sum);</p>
+<p>select @sum;<br><code>`</code></p>
+<p><a href="#chap-0">처음으로</a></p>
+<blockquote>
+<p>참고자료</p>
+</blockquote>
+<h2 id="데이터베이스-설계-및-구현-정재화-이언배-한국방송통신대학교출판문화원"><a href="#데이터베이스-설계-및-구현-정재화-이언배-한국방송통신대학교출판문화원" class="headerlink" title="데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원"></a>데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원</h2>
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://OneNineIx.github.io/2018/09/17/database-chap11/" data-id="cjm55ibra0001pgvaafxi0apz" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://OneNineIx.github.io/2018/09/17/database-chap11/" data-id="cjm55jr7k0004msva42v9pjdu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -306,7 +467,7 @@
                             <a href="/2018/09/17/database-chap11/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)" class="thumbnail-image"></span>
     
     
 </a>
@@ -314,8 +475,8 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/09/17/database-chap11/" class="title">database_chap11</a></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap11/" class="title">저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)</a></p>
                             <p class="item-date"><time datetime="2018-09-16T17:16:24.000Z" itemprop="datePublished">2018-09-17</time></p>
                         </div>
                     </li>
@@ -409,7 +570,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -429,7 +590,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -439,7 +600,7 @@
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/B-트리-인덱스/" style="font-size: 15px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 15px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 15px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
+            <a href="/tags/B-트리-인덱스/" style="font-size: 15px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 15px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 15px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
         </div>
     </div>
 
