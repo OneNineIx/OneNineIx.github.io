@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>트랜잭션과 백업 | Joonseong H</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="database,MySQL" />
+    
+    <meta name="description" content="목차     1. 트랜잭션의 개념2. 잠금의 개념3. 백업과 복원의 개념4. 실습예제     트랜잭션의 개념 서로 연관된 다수의 데이터베이스 명령들로 이루어진 논리적 작업 단위(예를 들면 계좌이체하는 일련의 과정, 계좌조회, 이체, 이체결과 저장, 등등 일련의 명령의 작업 단위) 데이터에 대한 동시에 발생한 작업 요청 처리시 일관성 및 무결성 훼손">
+<meta name="keywords" content="database,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="트랜잭션과 백업">
+<meta property="og:url" content="http://OneNineIx.github.io/2018/09/17/database-chap14/index.html">
+<meta property="og:site_name" content="Joonseong H">
+<meta property="og:description" content="목차     1. 트랜잭션의 개념2. 잠금의 개념3. 백업과 복원의 개념4. 실습예제     트랜잭션의 개념 서로 연관된 다수의 데이터베이스 명령들로 이루어진 논리적 작업 단위(예를 들면 계좌이체하는 일련의 과정, 계좌조회, 이체, 이체결과 저장, 등등 일련의 명령의 작업 단위) 데이터에 대한 동시에 발생한 작업 요청 처리시 일관성 및 무결성 훼손">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+<meta property="og:updated_time" content="2018-09-16T22:12:15.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="트랜잭션과 백업">
+<meta name="twitter:description" content="목차     1. 트랜잭션의 개념2. 잠금의 개념3. 백업과 복원의 개념4. 실습예제     트랜잭션의 개념 서로 연관된 다수의 데이터베이스 명령들로 이루어진 논리적 작업 단위(예를 들면 계좌이체하는 일련의 과정, 계좌조회, 이체, 이체결과 저장, 등등 일련의 명령의 작업 단위) 데이터에 대한 동시에 발생한 작업 요청 처리시 일관성 및 무결성 훼손">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicons/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">IT blog / Thanks to everyone!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://onenineix.github.io/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/markdown/">markdown</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/">programing</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/database/">database</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/javascript/">javascript</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/mybatis/">mybatis</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/">database</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/ROLLBACK/">ROLLBACK</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/ROLLBACK/COMMIT/">COMMIT</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/">TRANSACTION</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/HANDLER-FOR-SQLEXCEPTION/">HANDLER FOR SQLEXCEPTION</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-database-chap14" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        트랜잭션과 백업
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/09/17/database-chap14/" class="article-date">
+            <time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/database/">database</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<p><a id="chap-0"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">목차</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="#chap-1">1. 트랜잭션의 개념</a><br><a href="#chap-2">2. 잠금의 개념</a><br><a href="#chap-3">3. 백업과 복원의 개념</a><br><a href="#chap-4">4. 실습예제</a></td>
+</tr>
+</tbody>
+</table>
+<p><a id="chap-1"></a></p>
+<h2 id="트랜잭션의-개념"><a href="#트랜잭션의-개념" class="headerlink" title="트랜잭션의 개념"></a>트랜잭션의 개념</h2><ul>
+<li>서로 <strong>연관된 다수의 데이터베이스 명령들로 이루어진 논리적 작업 단위</strong>(<u>예를 들면 계좌이체</u>하는 일련의 과정, 계좌조회, 이체, 이체결과 저장, 등등 일련의 명령의 작업 단위)</li>
+<li>데이터에 대한 동시에 발생한 작업 요청 처리시 일관성 및 무결성 훼손 문제가 발생하지 않도록 <strong>데이터 연산을 단위로 묶어 처리하기 위한 개념</strong></li>
+<li>DBMS는 트랜잭션의 4가지 특수성, 일관성, 고립성, 지속성)을 유지</li>
+</ul>
+<h4 id="트랜잭션-명령어"><a href="#트랜잭션-명령어" class="headerlink" title="트랜잭션 명령어"></a>트랜잭션 명령어</h4><ul>
+<li>하나의 트랜잭션을 정의할 수 있는 4개의 명령어로 구성<ul>
+<li>START(또는 BEGIN) TRANSACTION - 새로운 트랜잭션을 시작</li>
+<li>COMMIT - 트랜잭션에서 변경한 데이터 항목을 영구적으로 시스템에 반영</li>
+<li>SAVEPOINT id - 저장 시점 id를 지정</li>
+<li>ROLLBACK [TO id] - 트랜잭션의 변경 내역을 모두 목귀하거나 id 저장 시점까지만 복귀</li>
+</ul>
+</li>
+</ul>
+<h4 id="자동커밋-트랜잭션"><a href="#자동커밋-트랜잭션" class="headerlink" title="자동커밋 트랜잭션"></a>자동커밋 트랜잭션</h4><p>MySQL에서는 기본적으로 모든 실행되는 질의는 실행된 후 사용자의 요청 없이 자동으로 커밋하는 기능을 지원</p>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/4ddae56e-d966-4305-969f-0ef98caaaca4/1.PNG?resizeSmall&amp;width=832" alt="tran" title="참고자료
+데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">비활성화</span><br><span class="line">SET autocommit = 0</span><br><span class="line"></span><br><span class="line">활성화</span><br><span class="line">SET autocommit = 1</span><br></pre></td></tr></table></figure>
+<h4 id="명시적-트랜잭션"><a href="#명시적-트랜잭션" class="headerlink" title="명시적 트랜잭션"></a>명시적 트랜잭션</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">START TRANSACTION</span><br><span class="line">    [WITH CONSISTANT SNAPSHOT]</span><br><span class="line">    [READ WRITE]</span><br><span class="line">    [READ ONLY]</span><br><span class="line">        SQL문...</span><br><span class="line"></span><br><span class="line">COMMIT 또는 ROLLBACK</span><br></pre></td></tr></table></figure>
+<p>####트랜잭션의 사용</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DELIMITER $$</span><br><span class="line">CREATE PROCEDURE 프로시저-이름(매개변수)</span><br><span class="line">BEGIN</span><br><span class="line">    DECLARE EXIT HANDLER FOR SQLEXCEPTION  // 핸들러는 예외가 발생했을때</span><br><span class="line">        ROLLBACK;  // SQL문의 오류가 발생했을때 롤백해라는 설정</span><br><span class="line">    START TRANSACTION;</span><br><span class="line">        SQL문; // START TRANSACTION과 COMMIT 사이에 SQL문을 두어서 트랜잭션을 사용한다</span><br><span class="line">    COMMIT;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p><a id="chap-2"></a></p>
+<h2 id="잠금의-개념"><a href="#잠금의-개념" class="headerlink" title="잠금의 개념"></a>잠금의 개념</h2><ul>
+<li><strong>트랜잭션 간 테이블 접근 순서를 조정</strong><ul>
+<li>한 트랜잭션이 다른 트랜잭션에서 사용중인 테이블에 대한 접근을 방지</li>
+<li>데이터의 무결성 및 일관성을 유지</li>
+</ul>
+</li>
+<li>MySQL은 트랜잭션의 무결성 및 일관성을 유지하기 위해 명시적 잠금을 지원<ul>
+<li><strong>잠금이 유지되는 동안 다른 트랜잭션은 잠금이 해제될 때까지 대기</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="잠금의-종류"><a href="#잠금의-종류" class="headerlink" title="잠금의 종류"></a>잠금의 종류</h4><ul>
+<li>READ LOCK - 읽기는 가능, 쓰기는 불가능 복수 세션에 의해 취득 가능</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">LOCK TABLES 테이블_이름 READ //다른 트랜잭션이 READ락을 걸어도 허용</span><br></pre></td></tr></table></figure>
+<ul>
+<li>WRITE LOCK - 읽기/쓰기 불가능 -단일 세션에 의해서만 취득 가능( 다른사용자가 취득하는 동안 다른 사용자는 읽지도 쓰지도 못하게 하는 설정 )</li>
+</ul>
+<h4 id="MySQL의-잠금"><a href="#MySQL의-잠금" class="headerlink" title="MySQL의 잠금"></a>MySQL의 잠금</h4><ul>
+<li>데이터의 일관성과 무결성을 보장하기 위해 트랜잭션과 함께 사용</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">SET autocommit = 0;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">LOCK TABLES 테이블_이름 WRITE | READ,...;</span><br><span class="line">    SQL 문...</span><br><span class="line">COMMIT;</span><br><span class="line">UNLOCK TABLES; // 트랜젝션이 끝나고 락을 해제하지 않으면 테이블잠김이 풀리지 않아 다른사용자는 테이블을 사용하지 못하게 된다.</span><br></pre></td></tr></table></figure>
+<p><a id="chap-3"></a></p>
+<h2 id="백업과-복원의-개념"><a href="#백업과-복원의-개념" class="headerlink" title="백업과 복원의 개념"></a>백업과 복원의 개념</h2><ul>
+<li>업무와 관련된 중요 데이터를 저장하기 때문에 문제가 발생할 경우에 대한 대비가 필요</li>
+<li>데이터아 트랜잭션에 수행되는 변경 내용과 로그를 주기적으로 별도로 저장하는 작업</li>
+<li>백업의 방식, 상태, 대상, 장소에 따라 다양한 형태의 백업 정책 결정 가능</li>
+<li>복원은 저장된 백업 데이터를 사용하여 특정 시점으로 데이터베이스를 복귀시키는 작업</li>
+</ul>
+<h4 id="백업의-종류"><a href="#백업의-종류" class="headerlink" title="백업의 종류"></a>백업의 종류</h4><ul>
+<li>방식별 구분<ul>
+<li>물리적 백업 - DBMS가 사용하는 데이터 원본파일을 직접 복사하여 백업하는 방식</li>
+<li>논리적 백업 - 원본 데이터베이스와 동등한 데이터베이스를 구축하기 위한 DML을 추출하는 방식</li>
+</ul>
+</li>
+<li><p>상태별 구분</p>
+<ul>
+<li>온라인 백업/핫 백업 - DBMS가 운용되고 있는 상태에서 데이터 백업을 진행하는 방식</li>
+<li>오프라인 백업/콜드 백업 - DBMS를 정지시킨 상태에서 데이터 백업을 진행하는 방식</li>
+</ul>
+</li>
+<li><p>대상별 구분</p>
+<ul>
+<li>전체 백업 - 데이터베이스에 존재하는 모든 데이터를 백업하는 방식</li>
+<li>증분 백업 - 전체 백업 이후 주어진 시간이후에 이루어진 변경된 데이터만을 백업하는 방식</li>
+</ul>
+</li>
+<li>장소별 구분<ul>
+<li>로컬 백업 - 백업을 수행하는 컴퓨터에 설치되어 있는 DBMS를 백업하는 방식</li>
+<li>원격 백업 - 백업을 수행하는 컴퓨터가 아닌 원격으로 연결된 DBMS를 백업하는 방식</li>
+</ul>
+</li>
+<li>방식별 구분<ul>
+<li>물리적 백업 - MySQL의 데이터파일(<em> .FRM,</em> .MYD,* .MYI)을 복사하여 백업하는 방식</li>
+<li>논리적 백업 - 논리적 백업 전용 소프트웨어인 mysqldump를 사용하여 백업</li>
+</ul>
+</li>
+<li>상태별 구분<ul>
+<li>온라인 백업/핫(Hot) 백업 - Enterprise Edition Hot백업(온라인) 백업을 지원</li>
+<li>오프라인 백업/콜드(Cold) 백업 - mysqldump 등의 유틸리티 이용</li>
+</ul>
+</li>
+</ul>
+<h4 id="MySQL에서의-복원"><a href="#MySQL에서의-복원" class="headerlink" title="MySQL에서의 복원"></a>MySQL에서의 복원</h4><ul>
+<li>물리적 백업 데이터를 이용한 복원<ul>
+<li>복제된 데이터 파일(<em> .FRM,</em> .MYD,* .MYI)을 datadir 변수에서 명시한 디렉토리에 복사</li>
+<li>물리적으로 백업한 데이터베이스의 하드웨어적 구성요소와 유사한 경우에만 복원가능</li>
+</ul>
+</li>
+<li>논리적 백업 데이터를 이용한 복원<ul>
+<li>mysql 클라이언트 유틸리티를 사용</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">&gt;&gt;mysql -u 사용자_이름 -p 데이터베이스_이름 &lt;파일_이름</span><br></pre></td></tr></table></figure>
+<p><a id="chap-4"></a></p>
+<p>##실습예제</p>
+<h5 id="실습예제-bank스키마-만들기"><a href="#실습예제-bank스키마-만들기" class="headerlink" title="실습예제(bank스키마 만들기)"></a>실습예제(bank스키마 만들기)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE SCHEMA bank; // bank 스키마생성</span><br><span class="line"></span><br><span class="line">USE bank; // 작업스키마로 선택</span><br><span class="line"></span><br><span class="line">CREATE TABLE account(</span><br><span class="line">    user_id VARCHAR(45) NOT NULL,</span><br><span class="line">    user_name VARCHAR(45) NOT NULL,</span><br><span class="line">    balance INT NOT NULL DEFAULT 0, // 잔액 컬럼, 기본으로 0설정</span><br><span class="line">    PRIMARY KEY (user_id)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h5 id="TRIGGER-설정-balance-컬럼은-잔고인데-잔액을-음수로-INSERT-UPDATE-하는-등의-미연-방지"><a href="#TRIGGER-설정-balance-컬럼은-잔고인데-잔액을-음수로-INSERT-UPDATE-하는-등의-미연-방지" class="headerlink" title="TRIGGER 설정 - balance 컬럼은 잔고인데 잔액을 음수로 INSERT, UPDATE 하는 등의 미연 방지"></a>TRIGGER 설정 - balance 컬럼은 잔고인데 잔액을 음수로 INSERT, UPDATE 하는 등의 미연 방지</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE TRIGGER balance_check_insert BEFORE INSERT ON account FOR EACH ROW  // account테이블에 대해서 항상 각각의 행에대해서 INSERT가 되기 전에 행동하는 트리거를 생성</span><br><span class="line">    BEGIN</span><br><span class="line">        IF (NEW.balance &lt; 0) THEN // 새로운 생성되는 balance 컬럼의 값이 0보다 작을경우</span><br><span class="line">            SIGNAL SQLSTATE &apos;45000&apos; SET message_text=&apos;잔액은 음수가 될 수 없습니다.&apos;;</span><br><span class="line">        END IF;</span><br><span class="line">    END $$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<h4 id="TRIGGER-BEFORE-UPDATE"><a href="#TRIGGER-BEFORE-UPDATE" class="headerlink" title="TRIGGER -BEFORE UPDATE"></a>TRIGGER -BEFORE UPDATE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE TRIGGER balance_check_update BEFORE UPDATE ON account FOR // account테이블에 대해서 항상 각각의 행에대해서 UPDATE가 되기 전에 행동하는 트리거를 생성</span><br><span class="line">    EACH ROW</span><br><span class="line"></span><br><span class="line">    BEGIN</span><br><span class="line">        IF(NEW.balance &lt; 0) THEN  // 새로운 생성되는 balance 컬럼의 값이 0보다 작을경우</span><br><span class="line">            SIGNAL SQLSTATE &apos;45000&apos; SET message_text=&apos;잔액은 음수가 될 수 없습니다.&apos;;</span><br><span class="line">        END IF;</span><br><span class="line">    END $$</span><br></pre></td></tr></table></figure>
+<h4 id="더미데이터를-입력해보자"><a href="#더미데이터를-입력해보자" class="headerlink" title="더미데이터를 입력해보자"></a>더미데이터를 입력해보자</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO account</span><br><span class="line">    VALUES(&apos;0001&apos;,&apos;홍길동&apos;,-10000);</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/859c370d-4625-48e9-9502-b96bd3f39055/1.PNG?resizeSmall&amp;width=832" alt="dummy"></p>
+<p>그럼에도 한번 실행해보자</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM account;  </span><br><span class="line">// 데이터가 조회되지 않는다</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/4e60d914-49b5-41d3-86a5-bc53bb8f5416/1.PNG?resizeSmall&amp;width=832" alt="fail"></p>
+<h4 id="balance-컬럼의-값을-음수가-아닐경우-올바르게-데이터가-들어가는-모습을-볼-수-있다"><a href="#balance-컬럼의-값을-음수가-아닐경우-올바르게-데이터가-들어가는-모습을-볼-수-있다" class="headerlink" title="balance 컬럼의 값을 음수가 아닐경우 올바르게 데이터가 들어가는 모습을 볼 수 있다."></a>balance 컬럼의 값을 음수가 아닐경우 올바르게 데이터가 들어가는 모습을 볼 수 있다.</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO account</span><br><span class="line">    VALUES(&apos;0001&apos;,&apos;홍길동&apos;,4000);</span><br><span class="line"></span><br><span class="line">INSERT INTO account</span><br><span class="line">    VALUES(&apos;0002&apos;,&apos;허균&apos;,3000);</span><br><span class="line"></span><br><span class="line">SELECT * FROM account;</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/a9832dcf-a357-4825-815e-fc4e39d0ba62/1.PNG?resizeSmall&amp;width=832" alt="ok"></p>
+<h2 id="실습예제"><a href="#실습예제" class="headerlink" title="실습예제"></a>실습예제</h2><p>####홍길동의 계좌에서 1500원을 허균의 계좌로 이체하시오<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UPDATE account</span><br><span class="line">    SET balance = balance - 5000</span><br><span class="line">    WHERE user_id = &apos;0001&apos;;</span><br><span class="line"></span><br><span class="line">UPDATE account</span><br><span class="line">    SET balance = balance + 5000</span><br><span class="line">    WHERE user_id = &apos;0002&apos;;</span><br><span class="line"></span><br><span class="line">SELECT * FROM account;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/fcedde36-f7dc-4557-bb8a-64cfa5098bb3/1.PNG?resizeSmall&amp;width=832" alt="ok"></p>
+<h2 id="실습예제2"><a href="#실습예제2" class="headerlink" title="실습예제2"></a>실습예제2</h2><h4 id="홍길동의-잔액-2500원과-허균의-잔액-4500원인-상태에서-홍길동의-계좌에서-5000원을-허균의-계좌에-송금하시오"><a href="#홍길동의-잔액-2500원과-허균의-잔액-4500원인-상태에서-홍길동의-계좌에서-5000원을-허균의-계좌에-송금하시오" class="headerlink" title="홍길동의 잔액 2500원과 허균의 잔액 4500원인 상태에서 홍길동의 계좌에서 5000원을 허균의 계좌에 송금하시오"></a>홍길동의 잔액 2500원과 허균의 잔액 4500원인 상태에서 홍길동의 계좌에서 5000원을 허균의 계좌에 송금하시오</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UPDATE account</span><br><span class="line">    SET balance = balance - 5000</span><br><span class="line">    WHERE user_id = &apos;0001&apos;;</span><br><span class="line"></span><br><span class="line">UPDATE account</span><br><span class="line">    SET balance = balance + 5000</span><br><span class="line">    WHERE user_id = &apos;0002&apos;;</span><br><span class="line"></span><br><span class="line">SELECT * FROM account;</span><br></pre></td></tr></table></figure>
+<p>이러한 SQL구문이 개별적으로 실행될시 원하는 실행결과를 얻을 수 없게된다<br>그래서 필요한 것이 트랜잭션 구문이다</p>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/51f9e032-be33-448a-bea6-0a96a8f4a613/1.PNG?resizeSmall&amp;width=832" alt="fail"></p>
+<h2 id="실습예제3"><a href="#실습예제3" class="headerlink" title="실습예제3"></a>실습예제3</h2><h4 id="홍길동의-잔액-2500원과-허균의-잔액-4500원인-상태에서-홍길동의-계좌에서-5000원을-허균의-계좌에-트랙잭션을-사용하여-송금하시오"><a href="#홍길동의-잔액-2500원과-허균의-잔액-4500원인-상태에서-홍길동의-계좌에서-5000원을-허균의-계좌에-트랙잭션을-사용하여-송금하시오" class="headerlink" title="홍길동의 잔액 2500원과 허균의 잔액 4500원인 상태에서 홍길동의 계좌에서 5000원을 허균의 계좌에 트랙잭션을 사용하여 송금하시오"></a>홍길동의 잔액 2500원과 허균의 잔액 4500원인 상태에서 홍길동의 계좌에서 5000원을 허균의 계좌에 트랙잭션을 사용하여 송금하시오</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">START TRANSACTION;</span><br><span class="line">    UPDATE account</span><br><span class="line">        SET balance = balance - 5000</span><br><span class="line">        WHERE user_id = &apos;0001&apos;;</span><br><span class="line"></span><br><span class="line">    UPDATE account</span><br><span class="line">        SET balance = balance + 5000</span><br><span class="line">        WHERE user_id = &apos;0002&apos;;</span><br><span class="line"></span><br><span class="line">    SELECT * FROM account;</span><br><span class="line"></span><br><span class="line">ROLLBACK;  // 문제가 있을시 트랜잭션 시작지점으로 ROLLBACK할 수 있다</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM account; //확인해보면 롤백된 것을 확인할 수 있다.</span><br></pre></td></tr></table></figure>
+<p>하지만 아직 부족하다 결과가 올바르면 COMMIT을 하고 문제가 있으면 ROLLBACK할 수 있도록 할 필요가 있다</p>
+<h2 id="실습예제4"><a href="#실습예제4" class="headerlink" title="실습예제4"></a>실습예제4</h2><h4 id="홍길동의-잔액-3000원과-허균의-잔액-4000원인-상태에서-홍길동의-계좌에서-5000원을-허균의-계좌로-트랜잭션을-사용하여-송금하시오-단-홍길동의-잔액이-부족할-경우-송금을-취소하시오"><a href="#홍길동의-잔액-3000원과-허균의-잔액-4000원인-상태에서-홍길동의-계좌에서-5000원을-허균의-계좌로-트랜잭션을-사용하여-송금하시오-단-홍길동의-잔액이-부족할-경우-송금을-취소하시오" class="headerlink" title="홍길동의 잔액 3000원과 허균의 잔액 4000원인 상태에서, 홍길동의 계좌에서 5000원을 허균의 계좌로 트랜잭션을 사용하여 송금하시오. 단, 홍길동의 잔액이 부족할 경우, 송금을 취소하시오"></a>홍길동의 잔액 3000원과 허균의 잔액 4000원인 상태에서, 홍길동의 계좌에서 5000원을 허균의 계좌로 트랜잭션을 사용하여 송금하시오. 단, 홍길동의 잔액이 부족할 경우, 송금을 취소하시오</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">CREATE PROCEDURE send_h_h(amount INT)</span><br><span class="line">    BEGIN</span><br><span class="line"></span><br><span class="line">        DECLARE EXIT HANDLER FOR SQLEXCEPTION ROLLBACK; // 트리거를 통해 발생한 익셉션일때 실행된다.</span><br><span class="line"></span><br><span class="line">        START TRANSACTION;</span><br><span class="line">            UPDATE account SET balance = balance - amount WHERE user_id = &apos;0001&apos;;</span><br><span class="line">                        UPDATE account SET balance = balance + amount WHERE user_id = &apos;0002&apos;;</span><br><span class="line">                COMMIT;</span><br><span class="line"></span><br><span class="line">END $$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/fcedde36-f7dc-4557-bb8a-64cfa5098bb3/1.PNG?resizeSmall&amp;width=832" alt="dd"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CALL send_h_h(1000);</span><br><span class="line"></span><br><span class="line">SELECT * FROM account; // 커밋된 결과를 확인 할 수 있다.</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/43e56358-11b2-4993-b73e-aeb2a2236ee2/1.PNG?resizeSmall&amp;width=832" alt="dd"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CALL send_h_h(5000);</span><br><span class="line"></span><br><span class="line">SELECT * FROM account; // 롤백이 제대로 실행되어 자금이체가 제대로 되지 않았다.</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/43e56358-11b2-4993-b73e-aeb2a2236ee2/1.PNG?resizeSmall&amp;width=832" alt="ds"></p>
+<h4 id="물리적데이터-백업방법"><a href="#물리적데이터-백업방법" class="headerlink" title="물리적데이터 백업방법"></a>물리적데이터 백업방법</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\ProgramData\MySQL\MySQL Server 8.0\Data 경로에 있는 스키마 전체를 복사하면 된다.</span><br></pre></td></tr></table></figure>
+<p>복구 방법은 원래 위치의 저장되어 있는 폴더에 내용물을 덮어써버리면된다.</p>
+<h4 id="논리적데이터-백업방법"><a href="#논리적데이터-백업방법" class="headerlink" title="논리적데이터 백업방법"></a>논리적데이터 백업방법</h4><p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/897d6b30-cf60-400f-aef7-b1bb227f703f/1.PNG?resizeSmall&amp;width=832" alt="ddd"></p>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/c9eee57f-e773-4582-8056-effe55654d16/1.PNG?resizeSmall&amp;width=832" alt="dsf"></p>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/8f2bc4b7-a2c1-4cf8-b48d-fa25de6c0756/1.PNG?resizeSmall&amp;width=832" alt="dddf"></p>
+<p><img src="https://www.evernote.com/shard/s517/sh/ca97bbe4-f7a9-407e-8488-7f39c06dac40/b5a868f6ea597328/res/aef42d1f-8556-4279-912d-b8e8be601ada/1.PNG?resizeSmall&amp;width=832" alt="sdfs"></p>
+<p><a href="#chap-0">처음으로</a></p>
+<blockquote>
+<p>참고자료<br>데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원<br><a href="http://cs.knou.ac.kr/~jaehwachung/data3.asp" target="_blank" rel="noopener">http://cs.knou.ac.kr/~jaehwachung/data3.asp</a></p>
+</blockquote>
+<h2 id="실습예제-스키마-다운로드"><a href="#실습예제-스키마-다운로드" class="headerlink" title="실습예제 스키마 다운로드"></a><a href="http://ep.knou.ac.kr/comm/downloadFile.do?fileId=20161002222407fWgGYV" title="데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원" target="_blank" rel="noopener">실습예제 스키마 다운로드</a></h2>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://OneNineIx.github.io/2018/09/17/database-chap14/" data-id="cjm5f24qc000a6gvafvryfai7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:onenineix@gmail.com" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/17/database-chap15/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            MySQL 예제모음 마무리
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/09/17/database-chap13/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">권한의 개념</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL 예제모음 마무리" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap15/" class="title">MySQL 예제모음 마무리</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="트랜잭션과 백업" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap14/" class="title">트랜잭션과 백업</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="권한의 개념" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap13/" class="title">권한의 개념</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:59:12.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="함수와 커서 그리고 트리거" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap12/" class="title">함수와 커서 그리고 트리거</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:21:31.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap11/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap11/" class="title">저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T17:16:24.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/">ROLLBACK</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/">COMMIT</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/">TRANSACTION</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/HANDLER-FOR-SQLEXCEPTION/">HANDLER FOR SQLEXCEPTION</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CONTINUE/">CONTINUE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CURSOR/">CURSOR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FUNCTION/">FUNCTION</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TRIGGER/">TRIGGER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/권한부여/">권한부여</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/시스템테이블/">시스템테이블</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/B-트리-인덱스/" style="font-size: 10px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/CONTINUE/" style="font-size: 10px;">CONTINUE</a> <a href="/tags/CURSOR/" style="font-size: 10px;">CURSOR</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/FUNCTION/" style="font-size: 10px;">FUNCTION</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 10px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/TRIGGER/" style="font-size: 10px;">TRIGGER</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 10px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/권한부여/" style="font-size: 10px;">권한부여</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/시스템테이블/" style="font-size: 10px;">시스템테이블</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 JSH</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'onenineix';
+    
+    
+    var disqus_url = 'http://OneNineIx.github.io/2018/09/17/database-chap14/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

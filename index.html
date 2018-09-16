@@ -152,6 +152,255 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
+        <a href="/2018/09/17/database-chap15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL 예제모음 마무리" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/17/database-chap15/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
+            </div>
+            <div class="date"><time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/09/17/database-chap15/">MySQL 예제모음 마무리</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+
+[toc]
+문제1 그룹함수(갯수)수강신청이 이루어진 강의의 강의번호와 신청횟수를 출력하시오123SELECT 강의_강의번호, COUNT(* ) AS 신청횟수    FROM 수강신청    GROUP BY 강의_강의번호;
+해설그룹함수의 종류는 5가지 뿐이다(최대, 최소, 합 ,평균, 갯수)학생이 강의를 수강신청하면 수강신청 테이블에 학생번호, 강의번호 및 신
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/09/17/database-chap14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="트랜잭션과 백업" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/17/database-chap14/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
+            </div>
+            <div class="date"><time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/09/17/database-chap14/">트랜잭션과 백업</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+
+
+
+
+목차
+
+
+
+
+1. 트랜잭션의 개념2. 잠금의 개념3. 백업과 복원의 개념4. 실습예제
+
+
+
+
+트랜잭션의 개념
+서로 연관된 다수의 데이터베이스 명령들로 이루어진 논리적 작업 단위(예를 들면 계좌이체하는 일련의 과정, 계좌조회, 이체, 이체결과 저장, 등등 일련의 명령의 작업 단위)
+데이터에 대한 동시에 발생한 작업 요청 처리시 일관성 및 무결성 훼손
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/09/17/database-chap13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="권한의 개념" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/17/database-chap13/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
+            </div>
+            <div class="date"><time datetime="2018-09-16T19:59:12.000Z" itemprop="datePublished">2018-09-17</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/09/17/database-chap13/">권한의 개념</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+
+
+
+
+목차
+
+
+
+
+1. 권한의 개념2. 시스템 테이블3. 권한 시스템4. 실습예제5. 사용자에게 스키마 권한부여6. SELECT할 수 있는 권한만 부여7. 컬럼조회 권한 회수하기8. 모든권한 회수하기9. 사용자 삭제하기
+
+
+
+
+권한의 개념
+허가 되지 않은 사용자가 DBMS에 접속하거나 사용자의 무분별한 데이터 접근을 제어하기 위한 개념
+사용자들의 모든 
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2018/09/17/database-chap12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="함수와 커서 그리고 트리거" class="thumbnail-image"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/17/database-chap12/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
+            </div>
+            <div class="date"><time datetime="2018-09-16T19:21:31.000Z" itemprop="datePublished">2018-09-17</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2018/09/17/database-chap12/">함수와 커서 그리고 트리거</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            
+
+
+
+
+목차
+
+
+
+
+1. 함수의 개념2. 커서의 개념3. CONTINUE 핸들러4. 트리거의 개념5. 함수실습 예제
+
+
+
+
+함수의 개념
+MySQL은 문자, 수학, 날짜 그룹함수 등 많은 편리한 함수를 제공
+이와 별도로 사용자가 직접 함수를 정의해서 사용하는 사용자 정의 함수 기능을 제공
+저장 프로시저와 유사하게 프로그래밍이 가능
+RETURN 문에 의해 특
+        </p>
+    </div>
+</article>
+    
+        </div>
+    
+
+    
+    
+    
+    
+        <div class="article-row">
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
         <a href="/2018/09/17/database-chap11/" class="thumbnail">
     
     
@@ -519,218 +768,6 @@ MySQL은 검색결과가 사용자에게 여러 형태로 사용되도록 여러
         </div>
     
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/09/16/database-chap6/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="데이터 조작언어의 종류(DML)" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/16/database-chap6/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
-            </div>
-            <div class="date"><time datetime="2018-09-16T11:55:11.000Z" itemprop="datePublished">2018-09-16</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/09/16/database-chap6/">데이터 조작언어의 종류(DML)</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            데이터 조작 언어(DML)
-정의된 테이블에 레코드를 삽입,수정,삭제 및 검색하는데 사용되는 명령어의 집합명령어의 종류1234INSERT - 테이블 스키마에 적합한 레코드를 삽입UPDATE - 테이블에서 조건을 만족하는 특정 레코드의 컬럼값을 수정DELETE - 테이블에 조건을 만족하는 특정 레코드를 삭제SELECT - 조건을 만족하는 레코드를 테이블에서 검
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/09/16/database-chap5/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="제약조건과 인덱스의 사용목적" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/16/database-chap5/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
-            </div>
-            <div class="date"><time datetime="2018-09-16T11:27:21.000Z" itemprop="datePublished">2018-09-16</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/09/16/database-chap5/">제약조건과 인덱스의 사용목적</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            제약 조건
-테이블과 테이블에 존재하는 데이터를 무결하게 관리하기 위한 목적으로 사용
-dbms는 테이블 조작 시 테이블에 정의된 제약조건을 만족시키는지 지속적으로 검사
-
-제약 조건의 종류
-PRIMARY KEY : 기본키 지정, UNIQUE와 NOT NULL 특성
-FOREIGN KEY : 외래키 지정, 참조 컬럼 정의
-NOT NULL : NULL이 될 수 없는
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/09/16/database-forward/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL database forward" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/16/database-forward/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
-            </div>
-            <div class="date"><time datetime="2018-09-16T10:51:28.000Z" itemprop="datePublished">2018-09-16</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/09/16/database-forward/">MySQL database forward</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Forward Engineer의 이해
-S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분석, 설계, 코딩, 테스트, 유지보수 등의 절차를 단계별로 진행하며 개발하는 공학 기법
-고차원 추상화와 논리, 또는 구현 독립적 설계로 시스템의 물리적 구현으로 변환하는 프로세스
-일반적으로 소프트웨어 설계 결과를 사용하여 특정 프로그래밍 언어를 사용한 코드를 생
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2018/09/14/database1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="관계형 데이터베이스 모델링 (Entity - Relationship Model)" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://OneNineIx.github.io/2018/09/14/database1/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a>
-            </div>
-            <div class="date"><time datetime="2018-09-14T07:17:55.000Z" itemprop="datePublished">2018-09-14</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2018/09/14/database1/">관계형 데이터베이스 모델링 (Entity - Relationship Model)</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            ER 모델링
-관계형 데이터베이스 모델링 (Entity - Relationship Mdel)
-개체(Entity) - 개별적으로 구성될 수 있는 모든것
-속성(property) - 각 개체가 가질수 있는 정보들
-관계(Relationship) - ER모델에서 관계는 두개이상의 개체사이의 연관성을 의미한다.
-
-
-
-개체집합(entity)
-다른대상과 분명히 구별되는 독
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
 
     </div></section>
 
@@ -783,6 +820,86 @@ S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분�
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL 예제모음 마무리" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap15/" class="title">MySQL 예제모음 마무리</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="트랜잭션과 백업" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap14/" class="title">트랜잭션과 백업</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="권한의 개념" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap13/" class="title">권한의 개념</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:59:12.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="함수와 커서 그리고 트리거" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap12/" class="title">함수와 커서 그리고 트리거</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:21:31.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/09/17/database-chap11/" class="thumbnail">
     
     
@@ -800,86 +917,6 @@ S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/17/database-chap10/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="데이터의 검색2(부속질의,뷰)" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
-                            <p class="item-title"><a href="/2018/09/17/database-chap10/" class="title">데이터의 검색2(부속질의,뷰)</a></p>
-                            <p class="item-date"><time datetime="2018-09-16T16:56:28.000Z" itemprop="datePublished">2018-09-17</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/17/database-chqp9/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="데이터의 검색(그룹,조인,집합연산)" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
-                            <p class="item-title"><a href="/2018/09/17/database-chqp9/" class="title">데이터의 검색(그룹,조인,집합연산)</a></p>
-                            <p class="item-date"><time datetime="2018-09-16T16:10:46.000Z" itemprop="datePublished">2018-09-17</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/17/database-chap8/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="EER 다이어그램" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
-                            <p class="item-title"><a href="/2018/09/17/database-chap8/" class="title">EER 다이어그램</a></p>
-                            <p class="item-date"><time datetime="2018-09-16T16:00:45.000Z" itemprop="datePublished">2018-09-17</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/17/DATABASE-CHAP7-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="데이터베이스의 함수" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
-                            <p class="item-title"><a href="/2018/09/17/DATABASE-CHAP7-1/" class="title">데이터베이스의 함수</a></p>
-                            <p class="item-date"><time datetime="2018-09-16T15:34:20.000Z" itemprop="datePublished">2018-09-17</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -889,7 +926,7 @@ S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/">ROLLBACK</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/">COMMIT</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/">TRANSACTION</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/HANDLER-FOR-SQLEXCEPTION/">HANDLER FOR SQLEXCEPTION</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -899,7 +936,7 @@ S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -909,7 +946,7 @@ S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CONTINUE/">CONTINUE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CURSOR/">CURSOR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FUNCTION/">FUNCTION</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TRIGGER/">TRIGGER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/권한부여/">권한부여</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/시스템테이블/">시스템테이블</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -919,7 +956,7 @@ S/W공학의 한 분야 소프트웨어 시스템을 개발하기 위하여 분�
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/B-트리-인덱스/" style="font-size: 10px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 10px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 10px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
+            <a href="/tags/B-트리-인덱스/" style="font-size: 10px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/CONTINUE/" style="font-size: 10px;">CONTINUE</a> <a href="/tags/CURSOR/" style="font-size: 10px;">CURSOR</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/FUNCTION/" style="font-size: 10px;">FUNCTION</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 10px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/TRIGGER/" style="font-size: 10px;">TRIGGER</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 10px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/권한부여/" style="font-size: 10px;">권한부여</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/시스템테이블/" style="font-size: 10px;">시스템테이블</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
         </div>
     </div>
 

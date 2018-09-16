@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>MySQL 예제모음 마무리 | Joonseong H</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="database,MySQL" />
+    
+    <meta name="description" content="[toc] 문제1 그룹함수(갯수)수강신청이 이루어진 강의의 강의번호와 신청횟수를 출력하시오123SELECT 강의_강의번호, COUNT(* ) AS 신청횟수    FROM 수강신청    GROUP BY 강의_강의번호; 해설그룹함수의 종류는 5가지 뿐이다(최대, 최소, 합 ,평균, 갯수)학생이 강의를 수강신청하면 수강신청 테이블에 학생번호, 강의번호 및 신">
+<meta name="keywords" content="database,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 예제모음 마무리">
+<meta property="og:url" content="http://OneNineIx.github.io/2018/09/17/database-chap15/index.html">
+<meta property="og:site_name" content="Joonseong H">
+<meta property="og:description" content="[toc] 문제1 그룹함수(갯수)수강신청이 이루어진 강의의 강의번호와 신청횟수를 출력하시오123SELECT 강의_강의번호, COUNT(* ) AS 신청횟수    FROM 수강신청    GROUP BY 강의_강의번호; 해설그룹함수의 종류는 5가지 뿐이다(최대, 최소, 합 ,평균, 갯수)학생이 강의를 수강신청하면 수강신청 테이블에 학생번호, 강의번호 및 신">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+<meta property="og:updated_time" content="2018-09-16T22:11:40.666Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 예제모음 마무리">
+<meta name="twitter:description" content="[toc] 문제1 그룹함수(갯수)수강신청이 이루어진 강의의 강의번호와 신청횟수를 출력하시오123SELECT 강의_강의번호, COUNT(* ) AS 신청횟수    FROM 수강신청    GROUP BY 강의_강의번호; 해설그룹함수의 종류는 5가지 뿐이다(최대, 최소, 합 ,평균, 갯수)학생이 강의를 수강신청하면 수강신청 테이블에 학생번호, 강의번호 및 신">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicons/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">IT blog / Thanks to everyone!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://onenineix.github.io/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/markdown/">markdown</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/">programing</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/database/">database</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/javascript/">javascript</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/mybatis/">mybatis</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/">database</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-database-chap15" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        MySQL 예제모음 마무리
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/09/17/database-chap15/" class="article-date">
+            <time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/database/">database</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<p><a id="chap-0"></a></p>
+<p>[toc]</p>
+<h4 id="문제1-그룹함수-갯수"><a href="#문제1-그룹함수-갯수" class="headerlink" title="문제1 그룹함수(갯수)"></a>문제1 그룹함수(갯수)</h4><p>수강신청이 이루어진 강의의 강의번호와 신청횟수를 출력하시오<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 강의_강의번호, COUNT(* ) AS 신청횟수</span><br><span class="line">    FROM 수강신청</span><br><span class="line">    GROUP BY 강의_강의번호;</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>그룹함수의 종류는 5가지 뿐이다(최대, 최소, 합 ,평균, 갯수)<br>학생이 강의를 수강신청하면 수강신청 테이블에 학생번호, 강의번호 및 신청시각이 기록<br>주어진 질의문을 처리하기 위해서는 수강신청 테이블에서 강의번호가 같은 레코드를 그룹화함<br>COUNT(* ) 함수를 사용하여 그룹별 포함된 레코드의 횟수를 세는 방식으로 처리</p>
+<h4 id="문제2-그룹함수-최소"><a href="#문제2-그룹함수-최소" class="headerlink" title="문제2 그룹함수(최소)"></a>문제2 그룹함수(최소)</h4><p>소속학과별 최연소자의 나이가 25이하인 그룹의<br>소속학과와 최연소자_나이를 출력하시오<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT MIN(나이) AS 최연소자_나이</span><br><span class="line">    FROM 학생</span><br><span class="line">                                                //떙!!WHERE 나이 &lt;= 25</span><br><span class="line">    GROUP BY 소속학과</span><br><span class="line">    HAVING 나이 &lt;= 25;</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>GROUP BY 절 사용된 SELECT 문에서 그룹에 대한 조건은 HAVING 절에 기술<br>WHERE 절과 동일하게 연산식을 구성할 수 있으며 그룹에서만 적용가능한 그룹함수 사용 가능</p>
+<h4 id="문제3-조인조건"><a href="#문제3-조인조건" class="headerlink" title="문제3 조인조건"></a>문제3 조인조건</h4><p>다음 중 조인 조건이 기술되는 절은??</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ON절 // 두 테이블간의 연결조건</span><br></pre></td></tr></table></figure>
+<p>해설<br>SELECT 문에서 조인에 대한 조건은 ON절에 기술<br>WHERE 절은 조인 조건 이외의 조건을 기술할 때 사용(레코드에 대한 조건)</p>
+<h4 id="문제4-조인조건"><a href="#문제4-조인조건" class="headerlink" title="문제4 조인조건"></a>문제4 조인조건</h4><p>컴퓨터과학과 소속의 교수의 교수이름, 직위, 그리고 교수가 담당하는 강의이름, 이수구분을 출력하시오</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT 교수.교수이름, 교수.직위, 강의.강의이름, 강의.이수구분</span><br><span class="line">    FROM 교수 INNER JOIN 강의</span><br><span class="line">    ON 교수.교수번호 = 강의.교수번호</span><br><span class="line">    WHERE 교수.소속학과 = &apos;컴퓨터과학과&apos;</span><br></pre></td></tr></table></figure>
+<p>해설<br>조건을 일치하는(강의를 하는) 레코드만을 검색되므로 내부조인(INNER JOIN)이 사용<br>내부조인의 조인 조건 ‘교수.교수번호 = 강의.교수번호’은 ON절에 기술<br>컴퓨터학과 소속의 교수만을 검색하기 위한 조건 ‘교수.소속학과 = ‘컴퓨터과학과’’는 WHERE절에 기술</p>
+<h4 id="문제5-셀프조인"><a href="#문제5-셀프조인" class="headerlink" title="문제5 셀프조인"></a>문제5 셀프조인</h4><p>다음 중 SQL 문 작성 시 테이블의 별칭을 반드시 사용해야 하는 조인 질의 유형은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">셀프조인 // 같은테이블을 조인해서 또다른 정보를 끄집어 낼때 사용하는 조인이므로</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>조인 시 SQL 문의 가독성을 높이고 효율적으로 사용하기 위해서는 테이블의 별칭을 사용<br>자기 자신과 조인하는 셀프조인의 경우 조인하는 테이블 명이 동일하기 때문에 반드시 별칭 사용</p>
+<h4 id="문제6-외부조인"><a href="#문제6-외부조인" class="headerlink" title="문제6 외부조인"></a>문제6 외부조인</h4><p>A와 B 테이블을 조인할 때 A와 B의 공통분모 결합이 존재하는 것을 출력하고,<br>A에는 없고 B에만 있는것도 출력하는 조인은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">오른쪽 외부조인 RIGHT OUTER JOIN</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>내부조인 : 두 집합의 교집합 만을 검색 결과에 포함<br>왼쪽 외부조인 : A를 모두 포함<br>오른쪽 외부조인 : B를 모두 포함<br>완전 외부조인 : 합집합을 검색 결과에 포함</p>
+<h4 id="문제7-LEFT-OUTER-JOIN"><a href="#문제7-LEFT-OUTER-JOIN" class="headerlink" title="문제7 LEFT OUTER JOIN"></a>문제7 LEFT OUTER JOIN</h4><p>모든 교수의 교수이름, 직위를 출력하고 해당 교수가 강의를 담당할 경우 강의의 강의이름, 이수구분을 출력하시오<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 교수.교수이름, 교수.직위, 강의.강의이름, 강의.이수구분</span><br><span class="line">    FROM 교수 LEFT OUTER JOIN 강의</span><br><span class="line">    ON 교수.교수번호 = 강의.교수번호;</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>주어진 질의문을 처리하는데 교수와 강의 테이블이 필요하므로 조인을 사용<br>조인 검색 결과에 강의를 하지 않는 교수에 대한 레코드를 검색 결과에 포함해야 하므로 외부조인을 사용<br>FROM 절에서 교수 테이블은 왼쪽, 강의 테이블은 오른쪽에 위치하므로 LEFT OUTER JOIN을 사용하여 조인</p>
+<h4 id="문제8-CREATE-VIEW"><a href="#문제8-CREATE-VIEW" class="headerlink" title="문제8 CREATE VIEW"></a>문제8 CREATE VIEW</h4><p>이수구분이 전공과목인 강의를 출력하는 전공강의 뷰를 생성하시오<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW 전공강의 AS // VIEW는 원본에 영향을 주지 않는 가상의 테이블이므로 AS를 사용한다</span><br><span class="line">    SELECT * FROM 강의</span><br><span class="line">    WHERE 이수구분 LIKE &apos;전공%&apos;;  // 부분일치검색</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>뷰 생성은 CREATE VIEW 구문을 사용<br>뷰의 행동을 결정하는 SELECT 문 앞에 AS를 기술<br>전공과목의 종류는 전공필수와 전공선택이 있으므로 ‘전공’이라는 두 글자가 포함된 이수구분을 검색하기 위해서 LIKE 연산자를 사용<br>SELECT * FROM 전공강의; 와 같이 사용</p>
+<h4 id="문제9-CALL"><a href="#문제9-CALL" class="headerlink" title="문제9 CALL"></a>문제9 CALL</h4><p>저장 프로시저를 호출 할 때 사용하는 구문은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL 프로시저명 // 프로시저 안의 절차를 실행해라! 라는 의미</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>함수와 저장프로시저의 차이는?<br>저장 프로시저는 그 자체가 이미 실행될 수 있는 하나의 프로그램이다.<br>데이터베이스 객체로 CALL 명령어를 사용<br>함수는 독립사용 불가 SELECT문 안에 포함해서 사용</p>
+<h4 id="문제10-IF-THEN"><a href="#문제10-IF-THEN" class="headerlink" title="문제10 IF THEN"></a>문제10 IF THEN</h4><p>다음은 count 변수의 값이 1이면 result 변수에 ‘홀수’를 2면 ‘짝수’를 대입하는 저장프로시저 구문을 작성하시오.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IF count = 1 THEN</span><br><span class="line">    SET result = &apos;홀수&apos;</span><br><span class="line">else SET result = &apos;짝수&apos;</span><br><span class="line">END IF;</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>MySQL에서 조건문은 IF문과 CASE 문으로 제공<br>IF 문은 한 개의 조건은 IF-ELSE문으로 여러개의 조건은 IF-ELSEIF-ELSE 문으로 기술가능</p>
+<h4 id="문제11-함수에-대한-설명"><a href="#문제11-함수에-대한-설명" class="headerlink" title="문제11 함수에 대한 설명"></a>문제11 함수에 대한 설명</h4><p>다음 중 함수에 대한 설명으로 올바르지 않은 것은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">매개변수를 받아들이거나 반환할 수 있다 - 프로시저가 하는 기능이다</span><br><span class="line">함수는 함수의 이름으로 어떤 값 하나만을 반환할 수 있다.</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>함수는 저장 프로시저와 유사<br>그러나 저장 프로시저와 다르게 매개변수를 받아들일 수는 있으나 반환은 불가능</p>
+<h4 id="문제18-함수에-대한-설명"><a href="#문제18-함수에-대한-설명" class="headerlink" title="문제18 함수에 대한 설명"></a>문제18 함수에 대한 설명</h4><p>다음 중 데이터 타입이 CHAR(4)인 값을 받아들이고  // 함수는 정확히 따지면 매개변수가 업다. 입력값이다.<br>VARCHAR(10)인 값을 반환하는 ClassLevel 함수에 대한 정의로 옳은것은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE FUNCTION ClassLevel(abc CHAR(4))</span><br><span class="line">    RETURNS VARCHAR(10)</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>함수는 저장 프로시저와 달리 매개변수를 받아들일 수 있으나 매개변수 반환 불가능<br>함수는 매개변수에 IN, OUT, INOUT을 지정하지않음<br>반환하는 값은 RETURNS 키워드와 타입만을 통해 함수의 결과값을 명시한다.</p>
+<h4 id="문제19-커서-FETCH"><a href="#문제19-커서-FETCH" class="headerlink" title="문제19 커서 FETCH"></a>문제19 커서 FETCH</h4><p>커서에서 결과 레코드로부터 현재 커서가 가리키고 있는 포인터의 다음 레코드를 가져오고 커서의 위치를 다음 레코드로 지정하는 명령어는 무엇인가?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FETCH</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>커서란 복수개의 레코드를 가져와서 한 레코드씩 상황에따라 처리하는 것<br>커서는 질의문을 통해 레코드 집합을 가져온 후, 각각의 레코드에 대해서 별도의 처리를 하는 저장 프로그램<br>커서는 DECLARE, OPEN, FETCH, CLOSE 순서로 진행<br>각각의 레코드를 가져올 때 FETCH 명령어를 사용하여 현재 포인터가 가리키는 레코드를 반환하고 포인터를 다음 레코드로 지정</p>
+<h4 id="문제20-사용자에-대한-테이블의-접근-권한"><a href="#문제20-사용자에-대한-테이블의-접근-권한" class="headerlink" title="문제20 사용자에 대한 테이블의 접근 권한"></a>문제20 사용자에 대한 테이블의 접근 권한</h4><p>사용자에 대한 테이블의 접근 권한은 어느테이블에서 관리하는가?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tables_priv</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>user에서는 명령어의 실행 권한만을 설정<br>테이블에 접근 권한은 관리하기 때문에 tables_priv라는 테이블을 사용<br>columns_priv에서는 더욱 세밀하게 테이블의 각 컬럼에 대한 접근 권한을 명시</p>
+<h4 id="문제21-권한-GRANT"><a href="#문제21-권한-GRANT" class="headerlink" title="문제21 권한 GRANT"></a>문제21 권한 GRANT</h4><p>사용자에게 권한을 부여할 때 사용하는 명령어는?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>사용자 추가 또는 권한을 부여할 때는 GRANT 명령어를 사용<br>반대로 부여된 권한을 회수할 때는 REVOKE를 사용</p>
+<h4 id="문제22-GRANT-명령어"><a href="#문제22-GRANT-명령어" class="headerlink" title="문제22 GRANT 명령어"></a>문제22 GRANT 명령어</h4><p>GRANT 명령어 사용 시, ‘KNOU 데이터베이스의 모든 테이블’을 지칭하기 위해 사용하는 표기법으로 올바른 것은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KNOU.*</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>GRANT 명령어에서 특정데이터베이스에 존재하는 테이블을 지칭하기 위해서 ‘데이터베이스명.테이블명’ 형식의 표기 사용<br>모든 데이터베이스 또는 모든 테이블을 지정할 때는 * 을 대신 사용</p>
+<h4 id="문제23-권한을-회수하기-위한-REVOKE"><a href="#문제23-권한을-회수하기-위한-REVOKE" class="headerlink" title="문제23 권한을 회수하기 위한 REVOKE"></a>문제23 권한을 회수하기 위한 REVOKE</h4><p>localhost의 student1로부터 학생의 성벌, 전화번호 컬럼에 대한 SELECT 권한을 회수하기 위한 REVOKE 구분에서 밑줄 친 빈칸에 알맞은 키워드는?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REVOKE SELECT(성별,전화번호) ON knou.학생</span><br><span class="line">    FROM &apos;student1&apos;@&apos;localhost&apos;</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>REVOKE 문은 사용자에게 부여된 권한을 회수<br>ON절에서 스키마와 테이블을 명시<br>REVOKE절에서 명령어와 컬럼을 ‘명령어(컬럼리스트)’ 형식으로 기술</p>
+<h4 id="문제24-트랜잭션-COMMIT"><a href="#문제24-트랜잭션-COMMIT" class="headerlink" title="문제24 트랜잭션 COMMIT"></a>문제24 트랜잭션 COMMIT</h4><p>트랜잭션이 데이터의 수정 및 변경한 내역을 데이터베이스에 영구적으로 반영하기 위해 사용하는 SQL 명령어는?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMIT</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>트랜잭션 관리를 위해 MySQL은 START TRANSACTION, COMMIT, ROLLBACK, SAVEPOINT 명령등을 지원<br>COMMIT은 트랜잭션의 실행 결과를 데이터베이스에 반영하는 기능을 수행<br>ROLLBACK는 트랜잭션의 실행 결과를 실행 이전의 상태로 되돌리는 기능을 수행</p>
+<h4 id="문제25-잠금"><a href="#문제25-잠금" class="headerlink" title="문제25 잠금"></a>문제25 잠금</h4><p>다음 중 동시성 제어를 위해 사용하는 잠금(LOCK)에 대한 설명은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">잠금수준이 높아지면 교착상태가 발생할 확률이 높아진다</span><br><span class="line">잠금의 종류에는 READ LOCK, WRITE LOCK이 있다.</span><br><span class="line">잠금수준이 높아지면 잠금대상이 늘고 동시성이 떨어진다.</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>잠금 수준이 높아지면 고립성이 강하게 보장<br>잠금 수준이 높아짐에 따라 잠금 대상이 늘어나 동시에 여러 개의 트랜잭션이 수행될 수 있어 동시성이 저하<br>또한 교착상태가 늘어날 수 있어 교착상태 탐지 작업이 필요</p>
+<h4 id="문제26-백업"><a href="#문제26-백업" class="headerlink" title="문제26 백업"></a>문제26 백업</h4><p>백업 방식 중, 전체 백업 이후 주어진 시간 동안 변경된 데이터만을 복제하는 백업 방식은?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">증분 백업</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>백업은 백업 대상, 장소, 시기 등에 따라 다양한 방식으로 구분<br>주기적으로 전체 데이터베이스를 백업하는 방식을 전체 백업이라고 하며 전채 백업 이후 변경된 부분의 데이터만 백업하는 방식을 증분 백업이라고 함.</p>
+<p><img src="https://www.evernote.com/shard/s517/sh/173857ac-64f2-4807-9fb8-842f21ea5eda/fee805d9ac028dd9/res/a93235b8-8b70-4732-9557-52ccaf9a9e7e/1.PNG?resizeSmall&amp;width=832" alt="dsf" title="참고자료
+데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원"></p>
+<p>아래 SQL문을 수행 했을때 결과에 포함될 수 있는 레코드가 아닌 것은?</p>
+<p>SELECT B.강의번호, B.강의이름, B.이수구분, A.교수이름<br>    FROM 교수 A RIGHT OUTER JOIN 강의 B<br>        ON A.교수번호 = B.교수번호<br>해설<br>오른쪽 외부조인은 오른쪽 테이블의 모든 레코드 정보를 출력하고 왼쪽 테이블의 레코드를 붙이는 조인<br>따라서 오른쪽의 강의 테이블의 강의번호, 강의이름, 이수구분은 모두 출력하고 조건에 맞는 교수의 교수이름을 출력<br>조건에 맞지 않는 레코드에 대해서는 교수 이름을 NULL로 대체</p>
+<h4 id="문제27-서브쿼리"><a href="#문제27-서브쿼리" class="headerlink" title="문제27 서브쿼리"></a>문제27 서브쿼리</h4><p>다음 명령문의 실행결과는?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT A.교수번호, A.소속학과, A.전화번호</span><br><span class="line">    FROM 교수 AS A WHERE</span><br><span class="line">        (SELECT COUNT(* ) FROM 강의 AS B</span><br><span class="line">            WHERE B.교수번호 = A.교수번호) &gt;= 2</span><br></pre></td></tr></table></figure></p>
+<p>답 : 주어진 SQL 문은 교수번호에 따른 강의 수가 2이상 조건에 맞는 교수를 검색하는 질의</p>
+<p>해설<br>부속질의는 내부질의를 처리한 후 작성된 데이터를 재활용하여 외부질의를 처리<br>주어진 SQL 문은 교수번호에 따른 강의 수가 2이상 조건에 맞는 교수를 검색하는 질의</p>
+<h4 id="문제28-NOT-EXISTS"><a href="#문제28-NOT-EXISTS" class="headerlink" title="문제28 NOT EXISTS"></a>문제28 NOT EXISTS</h4><p>강의를 하지 않는 교수의 교수이름, 소속학과를 출력하시오<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT 교수.교수이름, 교수.소속학과</span><br><span class="line">    FROM 교수</span><br><span class="line">    WHERE NOT EXISTS  // 결과가 거짓이면 참</span><br><span class="line">    (SELECT * FROM 강의  // 강의테이블에서 교수.교수번호와 강의.강의번호가 일치하는 교수를 모두 조회하고 NOT EXISTS로 조회된 값이 존재하지 않는 것을 참으로 출력</span><br><span class="line">        WHERE 교수.교수번호 = 강의.교수번호);</span><br></pre></td></tr></table></figure></p>
+<p>해설<br>강의를 하지 않는 교수는 교수번호가 강의 테이블에 존재하지 않음<br>따라서 각 교수번호로 강의테이블에서 조회하여 검색되는 레코드가 존재하는지 검사하여 결과 생성가능<br>레코드의 존재 여부는 EXISTS와 NOT EXISTS 연산자로 해결가능</p>
+<p><a href="#chap-0">처음으로</a></p>
+<blockquote>
+<p>참고자료<br>데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원<br><a href="http://cs.knou.ac.kr/~jaehwachung/data3.asp" target="_blank" rel="noopener">http://cs.knou.ac.kr/~jaehwachung/data3.asp</a></p>
+</blockquote>
+<h2 id="실습예제-스키마-다운로드"><a href="#실습예제-스키마-다운로드" class="headerlink" title="실습예제 스키마 다운로드"></a><a href="http://ep.knou.ac.kr/comm/downloadFile.do?fileId=20161002222407fWgGYV" title="데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원" target="_blank" rel="noopener">실습예제 스키마 다운로드</a></h2>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://OneNineIx.github.io/2018/09/17/database-chap15/" data-id="cjm5f24qf000d6gva53qhrktn" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:onenineix@gmail.com" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/09/17/database-chap14/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">트랜잭션과 백업</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL 예제모음 마무리" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap15/" class="title">MySQL 예제모음 마무리</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="트랜잭션과 백업" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap14/" class="title">트랜잭션과 백업</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="권한의 개념" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap13/" class="title">권한의 개념</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:59:12.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="함수와 커서 그리고 트리거" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap12/" class="title">함수와 커서 그리고 트리거</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:21:31.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap11/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap11/" class="title">저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T17:16:24.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/">ROLLBACK</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/">COMMIT</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/">TRANSACTION</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/HANDLER-FOR-SQLEXCEPTION/">HANDLER FOR SQLEXCEPTION</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CONTINUE/">CONTINUE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CURSOR/">CURSOR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FUNCTION/">FUNCTION</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TRIGGER/">TRIGGER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/권한부여/">권한부여</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/시스템테이블/">시스템테이블</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/B-트리-인덱스/" style="font-size: 10px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/CONTINUE/" style="font-size: 10px;">CONTINUE</a> <a href="/tags/CURSOR/" style="font-size: 10px;">CURSOR</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/FUNCTION/" style="font-size: 10px;">FUNCTION</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 10px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/TRIGGER/" style="font-size: 10px;">TRIGGER</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 10px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/권한부여/" style="font-size: 10px;">권한부여</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/시스템테이블/" style="font-size: 10px;">시스템테이블</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 JSH</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'onenineix';
+    
+    
+    var disqus_url = 'http://OneNineIx.github.io/2018/09/17/database-chap15/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>함수와 커서 그리고 트리거 | Joonseong H</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="database,MySQL,TRIGGER,FUNCTION,CURSOR,CONTINUE" />
+    
+    <meta name="description" content="목차     1. 함수의 개념2. 커서의 개념3. CONTINUE 핸들러4. 트리거의 개념5. 함수실습 예제     함수의 개념 MySQL은 문자, 수학, 날짜 그룹함수 등 많은 편리한 함수를 제공 이와 별도로 사용자가 직접 함수를 정의해서 사용하는 사용자 정의 함수 기능을 제공 저장 프로시저와 유사하게 프로그래밍이 가능 RETURN 문에 의해 특">
+<meta name="keywords" content="database,MySQL,TRIGGER,FUNCTION,CURSOR,CONTINUE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="함수와 커서 그리고 트리거">
+<meta property="og:url" content="http://OneNineIx.github.io/2018/09/17/database-chap12/index.html">
+<meta property="og:site_name" content="Joonseong H">
+<meta property="og:description" content="목차     1. 함수의 개념2. 커서의 개념3. CONTINUE 핸들러4. 트리거의 개념5. 함수실습 예제     함수의 개념 MySQL은 문자, 수학, 날짜 그룹함수 등 많은 편리한 함수를 제공 이와 별도로 사용자가 직접 함수를 정의해서 사용하는 사용자 정의 함수 기능을 제공 저장 프로시저와 유사하게 프로그래밍이 가능 RETURN 문에 의해 특">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+<meta property="og:updated_time" content="2018-09-16T20:33:53.013Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="함수와 커서 그리고 트리거">
+<meta name="twitter:description" content="목차     1. 함수의 개념2. 커서의 개념3. CONTINUE 핸들러4. 트리거의 개념5. 함수실습 예제     함수의 개념 MySQL은 문자, 수학, 날짜 그룹함수 등 많은 편리한 함수를 제공 이와 별도로 사용자가 직접 함수를 정의해서 사용하는 사용자 정의 함수 기능을 제공 저장 프로시저와 유사하게 프로그래밍이 가능 RETURN 문에 의해 특">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicons/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">IT blog / Thanks to everyone!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://onenineix.github.io/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/markdown/">markdown</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/">programing</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/database/">database</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/javascript/">javascript</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/mybatis/">mybatis</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/database/">database</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-database-chap12" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        함수와 커서 그리고 트리거
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/09/17/database-chap12/" class="article-date">
+            <time datetime="2018-09-16T19:21:31.000Z" itemprop="datePublished">2018-09-17</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/CONTINUE/">CONTINUE</a>, <a class="tag-link" href="/tags/CURSOR/">CURSOR</a>, <a class="tag-link" href="/tags/FUNCTION/">FUNCTION</a>, <a class="tag-link" href="/tags/MySQL/">MySQL</a>, <a class="tag-link" href="/tags/TRIGGER/">TRIGGER</a>, <a class="tag-link" href="/tags/database/">database</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <hr>
+<p><a id="chap-0"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">목차</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="#chap-1">1. 함수의 개념</a><br><a href="#chap-2">2. 커서의 개념</a><br><a href="#chap-3">3. CONTINUE 핸들러</a><br><a href="#chap-4">4. 트리거의 개념</a><br><a href="#chap-5">5. 함수실습 예제</a></td>
+</tr>
+</tbody>
+</table>
+<p><a id="chap-1"></a></p>
+<h2 id="함수의-개념"><a href="#함수의-개념" class="headerlink" title="함수의 개념"></a>함수의 개념</h2><ul>
+<li>MySQL은 문자, 수학, 날짜 그룹함수 등 많은 편리한 함수를 제공</li>
+<li>이와 별도로 사용자가 직접 함수를 정의해서 사용하는 사용자 정의 함수 기능을 제공<ul>
+<li>저장 프로시저와 유사하게 프로그래밍이 가능</li>
+<li>RETURN 문에 의해 특정 값 반환 기능</li>
+<li>저장 프로시저는 CALL 명령에 의해 호출되지만 함수는 SELECT 문에 포함되어 실행(독립적인 실행이 불가능)</li>
+<li>BEGIN ~ END 블록 안에서 결과 셋을 반환하는 SQL문 사용이 불가능</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">CREATE</span><br><span class="line">    [DEFINER=&#123;사용자|현재사용자&#125;]</span><br><span class="line">    FUNCTION 함수명([매개변수[ , ...]])  // IN 매개변수 역할</span><br><span class="line">        RETURNS 데이터 타입    //OUT 매개변수 역할</span><br><span class="line">BEGIN</span><br><span class="line">    SQL 문</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<h4 id="함수와-저장프로그램의-차이"><a href="#함수와-저장프로그램의-차이" class="headerlink" title="함수와 저장프로그램의 차이"></a>함수와 저장프로그램의 차이</h4><ul>
+<li>큰차이는 없다 매개변수와 선언부의 차이만 조금있다.</li>
+</ul>
+<h5 id="선언부의-차이"><a href="#선언부의-차이" class="headerlink" title="선언부의 차이"></a>선언부의 차이</h5><ul>
+<li>저장프로그램(프로시저)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE 프로시저_이름(</span><br><span class="line">    IN 변수_이름1 데이터타입1,</span><br><span class="line">    OUT 변수_이름2 데이터타입2)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>함수</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE FUNCTION 함수_이름</span><br><span class="line">        (변수_이름 데이터 타입1)</span><br><span class="line">    RETURN 데이터 타입2</span><br></pre></td></tr></table></figure>
+<h5 id="호출-방법의-차이"><a href="#호출-방법의-차이" class="headerlink" title="호출 방법의 차이"></a>호출 방법의 차이</h5><ul>
+<li>저장프로그램</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CALL 저장프로그램_이름(입력_매개변수, 출력_매개변수);</span><br><span class="line">SELECT 출력_매개변수;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>함수</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT 함수_이름(컬럼_이름)</span><br><span class="line">    FROM 테이블_이름</span><br></pre></td></tr></table></figure>
+<p>함수는 반드시 SELECT 문에 포함되어 사용되는데 , 함수<em>이름(컬럼</em>이름) 이 바로 입력값이 되고,  RETURN을 통해 또다른 값으로 대치되어 SELECT문이 동작할때 함수의 결과값이 SELECT문에 포함되어 출력된다.</p>
+<hr>
+<p><a id="chap-2"></a></p>
+<h2 id="커서의-개념"><a href="#커서의-개념" class="headerlink" title="커서의 개념"></a>커서의 개념</h2><ul>
+<li>어떤 레코드를 처리해야 하는지 가리키는 포인터이다</li>
+<li>커서(cursor)는 테이블에서 SELECT 문을 사용하여 여러개의 레코드를 질의한 후, 질의 결과인 집합에서 <strong>한 레코드씩 처리하면서 한번에 여러개를 처리하기 위해 사용하는 방식</strong></li>
+<li>순차적(전방향)으로 읽기만 가능, 이전에 읽었던 레코드를 다시 읽기는 불가능하다.</li>
+<li>레코드를 삭제하거나 수정이 불가능(레코드 처리결과를 임시적으로 재처리해 출력을 해주는 역할만 가능할 뿐 처리결과를 DBMS에 다시 반영할수는 없다.</li>
+<li>저장 프로시저, 함수, 트리거에서 사용 가능</li>
+<li>커서의 선언은 변수의 선언 다음</li>
+</ul>
+<p><img src="https://www.evernote.com/shard/s517/sh/daa9d301-f16a-4a2c-8a01-f28841759ac6/d4e11934f53c43bc/res/113a581a-3288-4e68-b561-c1676fb03e4e/1.PNG?resizeSmall&amp;width=832" alt="커서의 동작과정" title="참고자료
+데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원"></p>
+<h4 id="커서의-선언과-열기"><a href="#커서의-선언과-열기" class="headerlink" title="커서의 선언과 열기"></a>커서의 선언과 열기</h4><ul>
+<li>커서의 이름과 커서가 실행할 SQL문을 지정하여 커서를 선언</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DECLARE 커서명 CURSOR FOR</span><br><span class="line">    SELECT 문</span><br></pre></td></tr></table></figure>
+<ul>
+<li>커서를 초기화하고 SQL문을 실행</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">OPEN 커서명</span><br></pre></td></tr></table></figure>
+<h4 id="커서의-사용과-닫기"><a href="#커서의-사용과-닫기" class="headerlink" title="커서의 사용과 닫기"></a>커서의 사용과 닫기</h4><ul>
+<li>SELECT 문에 대한 결과 레코드의 각 컬럼에 대응하는 변수를 지정</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">FETCH 커서명 INTO 변수명 [, 변수명]...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>커서 사용 후, 커서에 사용된 자원을 반납</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">CLOSE 커서명</span><br></pre></td></tr></table></figure>
+<p><a id="chap-3"></a></p>
+<h4 id="CONTINUE-핸들러"><a href="#CONTINUE-핸들러" class="headerlink" title="CONTINUE 핸들러"></a>CONTINUE 핸들러</h4><ul>
+<li>FETCH를 호출할 때 <u>더 이상 레코드가 없을 경우 오류 이벤트가 발생</u></li>
+<li><strong>오류 이벤트에 지정된 동작으로 반응하도록 별도의 핸들러 작성이 필요</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">DECLARE CONTINUE HANDLER</span><br><span class="line">    FOR NOT FOUND SQL문</span><br></pre></td></tr></table></figure>
+<p><a id="chap-4"></a></p>
+<h2 id="트리거의-개념"><a href="#트리거의-개념" class="headerlink" title="트리거의 개념"></a>트리거의 개념</h2><ul>
+<li><p><strong>테이블에 조작이 이뤄질 때</strong>, 자동으로 지정된 애플리케이션이 동작 한다든지 다른 테이블의 데이터를 조작하도록 설계된 저장 프로그램</p>
+</li>
+<li><p>BEFORE(입력전에) , AFTER(입력후에) 의 시점차이와 INSERT, UPDATE, DELETE 세가지 동작밖에 없다</p>
+</li>
+</ul>
+<p><img src="https://www.evernote.com/shard/s517/sh/daa9d301-f16a-4a2c-8a01-f28841759ac6/d4e11934f53c43bc/res/09639e0f-8a6d-4f4c-9e0d-bc30bf157120/1.PNG?resizeSmall&amp;width=832" alt="트리거" title="참고자료
+데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원"></p>
+<h4 id="시점과-이벤트"><a href="#시점과-이벤트" class="headerlink" title="시점과 이벤트"></a>시점과 이벤트</h4><ul>
+<li>트리거 시점 - <strong>트리거가 실행될 시점을 명시</strong></li>
+<li>트리거 이벤트 - <u>INSERT, UPDATE, DELETE이벤트 발생 시 구동</u></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">(BEFORE | AFTER) (INSERT | UPDATE | DELETE)</span><br><span class="line">    ON 테이블명</span><br></pre></td></tr></table></figure>
+<h4 id="트리거-구문형식"><a href="#트리거-구문형식" class="headerlink" title="트리거 구문형식"></a>트리거 구문형식</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">CREATE TRIGGER 트리거 이름</span><br><span class="line">    트리거 시점 트리거 이벤트</span><br><span class="line">    ON 테이블_이름</span><br><span class="line">    FOR EACH ROW</span><br><span class="line"></span><br><span class="line">BEGIN</span><br><span class="line">    SQL문</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+<h4 id="트리거-명명규칙"><a href="#트리거-명명규칙" class="headerlink" title="트리거 명명규칙"></a>트리거 명명규칙</h4><ul>
+<li>트리거의 반응 시점과 <strong>트리거의 이벤트를 트리거 이름에 반영</strong> 하여 <u>혼란을 최소화</u></li>
+<li>트리거 이름이 중복되지 않게 하기 위한 명명규칙이 필요</li>
+<li>의무적인 규칙이 아닌 가이드라인</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">구문형식</span><br><span class="line">(BEFORE | AFTER)_테이블이름_(INSERT | UPDATE | DELETE)</span><br></pre></td></tr></table></figure>
+<p><a id="chap-5"></a></p>
+<h2 id="함수실습-예제"><a href="#함수실습-예제" class="headerlink" title="함수실습 예제"></a>함수실습 예제</h2><h5 id="인원제한에-따른-강의실을-알고싶다-하지만-저장프로시저는-SELECT문-안에는-들어갈수-없다-그럴때-사용하는-것이-함수"><a href="#인원제한에-따른-강의실을-알고싶다-하지만-저장프로시저는-SELECT문-안에는-들어갈수-없다-그럴때-사용하는-것이-함수" class="headerlink" title="인원제한에 따른 강의실을 알고싶다! 하지만 저장프로시저는 SELECT문 안에는 들어갈수 없다. 그럴때 사용하는 것이 함수!"></a>인원제한에 따른 강의실을 알고싶다! 하지만 저장프로시저는 SELECT문 안에는 들어갈수 없다. 그럴때 사용하는 것이 함수!</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT 강의번호, 인원제한, ???(강의번호) AS 강의실  </span><br><span class="line">    FROM 강의;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 이 명령문을 실행해야 함수를 생성할 수 있다!</span><br><span class="line"></span><br><span class="line">SET GLOBAL log_bin_trust_function_creators = 1;</span><br></pre></td></tr></table></figure>
+<h5 id="함수의-작성예"><a href="#함수의-작성예" class="headerlink" title="함수의 작성예"></a>함수의 작성예</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line"></span><br><span class="line">CREATE FUNCTION ClassLevel(p_ClassNumber CHAR(4))  //함수는 IN매개변수, OUT매개변수를 구별하지 않는다.</span><br><span class="line">    RETURNS VARCHAR(10)  // 함수는 반환하려는 매개변수의 이름으로 반환하는게 아니라 곧바로 함수의 결과가 값으로 반환</span><br><span class="line"></span><br><span class="line">BEGIN  // 함수의 동작부분</span><br><span class="line">    DECLARE p_ClassLevel VARCHAR(20);  // 변수를 선언하고</span><br><span class="line">    DECLARE classlimit INT(11);</span><br><span class="line"></span><br><span class="line">    SELECT 인원제한 INTO classlimit FROM 강의   //인원제한 컬럼만을 가져오고 그것을 classlimit이라는 변수에 집어넣겠다</span><br><span class="line">        WHERE 강의번호=p_ClassNumber;  // 사용자가 입력한 강의번호와 같은 강의레코드를 가져오는데</span><br><span class="line"></span><br><span class="line">    IF classlimit &gt; 80 THEN     // 인원제한 컬럼값이 80보다 작으면</span><br><span class="line">        SET p_ClassLevel=&apos;대강의실&apos;;   // p_ClassLevel에 &apos;대강의실&apos;을 set한다</span><br><span class="line">    ELSEIF (classlimit &lt; 80 AND classlimit &gt;= 40) THEN</span><br><span class="line">        SET p_ClassLevel=&apos;중강의실&apos;;</span><br><span class="line">    ELSE</span><br><span class="line">        SET p_ClassLevel=&apos;소강의실&apos;;</span><br><span class="line">    END IF;</span><br><span class="line"></span><br><span class="line">    RETURN (p_ClassLevel);</span><br><span class="line"></span><br><span class="line">END$$</span><br><span class="line"></span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<h5 id="함수의-사용"><a href="#함수의-사용" class="headerlink" title="함수의 사용"></a>함수의 사용</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT 강의번호, 인원제한, ClassLevel(강의번호) AS 강의실</span><br><span class="line">    FROM 강의;</span><br><span class="line">    WHERE 인원제한 &gt;=200</span><br></pre></td></tr></table></figure>
+<h5 id="커서의-사용"><a href="#커서의-사용" class="headerlink" title="커서의 사용"></a>커서의 사용</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">모든 강의 레코드에서 인원제한이 50명 이상인 과목들을 한 줄의 문자열로 연결하여 반환하는 프로시저를 생성하시오</span><br><span class="line"></span><br><span class="line">DECLARE lecture_cursor CURSOR FOR  //커서의 선언</span><br><span class="line">    SELECT 강의이름, 인원제한 FROM 강의;  //모든 강의테이블의 강의이름과 인원제한 레코드값</span><br><span class="line"></span><br><span class="line">OPEN lecture_cursor;</span><br><span class="line"></span><br><span class="line">get_lecture : LOOP  // FETCH가 더이상 되지 않을떄까지 루프를 돌게하는 설정</span><br><span class="line">    FETCH lecture_cursor INTO v_lecture, v_limit; // FETCH를 하게되면 첫번째 레코드에 있는 강의이름의 값이 v_lecture변수안에, 인원제한의 값이 v_limit변수안에 들어가게 된다.</span><br></pre></td></tr></table></figure>
+<h5 id="전체스크립트"><a href="#전체스크립트" class="headerlink" title="전체스크립트"></a>전체스크립트</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line"></span><br><span class="line">CREATE PROCEDURE build_lecture_list  // 기능을 하는 프로시저를 생성</span><br><span class="line">    (INOUT lecture_list VARCHAR(4000))  // 입력과 출력을 동시에 할 수 있는 매개변수 선언</span><br><span class="line"></span><br><span class="line">BEGIN</span><br><span class="line"></span><br><span class="line">    DECLARE v_finished INTEGER DEFAULT 0;  // 모든 레코드가 한번씩 훑어졌는지 확인하기 위해 사용되는 변수</span><br><span class="line">    DECLARE v_lecture VARCHAR(100) DEFAULT &quot;&quot;;  //강의의 이름을 저장하기 위한 변수</span><br><span class="line">    DECLARE v_limit INTEGER DEFAULT 0;  // 강의의 인원제한 값을 저장하기 위한 변수</span><br><span class="line"></span><br><span class="line">    DECLARE lecture_cursor CURSOR FOR</span><br><span class="line">        SELECT 강의이름, 인원제한 FROM 강의;</span><br><span class="line"></span><br><span class="line">    DECLARE CONTINUE HANDLER // 맨마지막 커서의 루프를 돌고나서 끝났을때 오류형태가 나오는것을 해결하기 위해 커서를 종료하는 설정</span><br><span class="line">        FOR NOT FOUND SET v_finished=1;  // FETCH가 더이상 없으면 v_finished에 1을 SET한다</span><br><span class="line"></span><br><span class="line">    OPEN lecture_cursor;</span><br><span class="line"></span><br><span class="line">    get_lecture : LOOP</span><br><span class="line"></span><br><span class="line">        FETCH lecture_cursor INTO v_lecture, v_limit;</span><br><span class="line"></span><br><span class="line">            IF v_finished=1 THEN // FETCH의 루프가 마지막에 다다랐는지 확인하는 설정 현재 0이므로  통과하게됨.</span><br><span class="line">            LEAVE get_lecture; // HANDLER가 작동하고 마지막 루프를 종료</span><br><span class="line">            END IF;</span><br><span class="line"></span><br><span class="line">        IF v_limit &gt;= 50 THEN // 인원제한이 50명 이상이면</span><br><span class="line">            SET lecture_list = CONCAT(v_lecture, &quot;; &quot;, lecture_list); // lecture_list 매개변수에 강의의 이름을 붙여 누적시켜나간다.</span><br><span class="line">        END IF;</span><br><span class="line"></span><br><span class="line">END LOOP get_lecture;</span><br><span class="line"></span><br><span class="line">CLOSE lecture_cursor;</span><br><span class="line"></span><br><span class="line">END $$</span><br><span class="line"></span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<h5 id="커서-실행-확인하기"><a href="#커서-실행-확인하기" class="headerlink" title="커서 실행 확인하기"></a>커서 실행 확인하기</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET @lecture_list = &quot;&quot;;  // 빈문자열 변수를 세트하고</span><br><span class="line">CALL build_lecture_list(@lecture_list); // 만든 커서가 담긴 프로시저 실행결과를 변수 @lecture_list에 담는다</span><br><span class="line">SELECT @lecture_list;  // 불러와보자.</span><br></pre></td></tr></table></figure>
+<h5 id="트리거-작성방법"><a href="#트리거-작성방법" class="headerlink" title="트리거 작성방법"></a>트리거 작성방법</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">학생 테이블에 UPDATE 문이 실행되기 전에 &apos;학년&apos; 컬럼에 입력되는 값이 학년의 범위를 넘어가는 값인지 체크하여 1보다 작을 경우 1로 바꾸고, 4보다 클 경우 4로 변경하시오</span><br><span class="line"></span><br><span class="line">DELIMITER $$</span><br><span class="line">CREATE TRIGGER before_학생_update // 트리거명을 이렇게 지어놓으면 어떤 동작을 하는지 트리거인지 알기 쉽다</span><br><span class="line">    BEFORE UPDATE ON 학생</span><br><span class="line">    FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">    IF NEW.학년 &lt; 1 THEN  // NEW는 수정하려는 레코드의 값</span><br><span class="line">        SET NEW.학년 = 1;</span><br><span class="line">    ELSEIF NEW.학년 &gt; 4 THEN</span><br><span class="line">        SET NEW.학년 = 4;</span><br><span class="line">    END  IF;</span><br><span class="line">END $$</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line">작성된 트리거는 테이블에 존재해서 확인할 수 있다.</span><br></pre></td></tr></table></figure>
+<h5 id="트리거가-잘-작동되었는지-확인하기"><a href="#트리거가-잘-작동되었는지-확인하기" class="headerlink" title="트리거가 잘 작동되었는지 확인하기"></a>트리거가 잘 작동되었는지 확인하기</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 학생</span><br><span class="line">    SET 학년 = 0   // 학년을 0이 세트될수 없도록 트리거를 작성했으므로</span><br><span class="line">    WHERE 학생번호 = &apos;201258047&apos;;</span><br><span class="line"></span><br><span class="line">SELECT * FROM 학생;</span><br><span class="line"></span><br><span class="line">//결과값으로 최규성학생은 1학년으로 바뀌어있다.</span><br></pre></td></tr></table></figure>
+<p><a href="#chap-0">처음으로</a></p>
+<blockquote>
+<p>참고자료<br>데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원<br><a href="http://cs.knou.ac.kr/~jaehwachung/data3.asp" target="_blank" rel="noopener">http://cs.knou.ac.kr/~jaehwachung/data3.asp</a></p>
+</blockquote>
+<h2 id="실습예제-스키마-다운로드"><a href="#실습예제-스키마-다운로드" class="headerlink" title="실습예제 스키마 다운로드"></a><a href="http://ep.knou.ac.kr/comm/downloadFile.do?fileId=20161002222407fWgGYV" title="데이터베이스 설계 및 구현. 정재화, 이언배. 한국방송통신대학교출판문화원" target="_blank" rel="noopener">실습예제 스키마 다운로드</a></h2>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://OneNineIx.github.io/2018/09/17/database-chap12/" data-id="cjm5f24q300066gvasl11ftle" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:onenineix@gmail.com" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/17/database-chap13/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            권한의 개념
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/09/17/database-chap11/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL 예제모음 마무리" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap15/" class="title">MySQL 예제모음 마무리</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="트랜잭션과 백업" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap14/" class="title">트랜잭션과 백업</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap13/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="권한의 개념" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap13/" class="title">권한의 개념</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:59:12.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap12/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="함수와 커서 그리고 트리거" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap12/" class="title">함수와 커서 그리고 트리거</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T19:21:31.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap11/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap11/" class="title">저장프로그램(PROCEDURE,FUNCTION,TRIGGER,CURSOR)</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T17:16:24.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/">ROLLBACK</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/">COMMIT</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/">TRANSACTION</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/HANDLER-FOR-SQLEXCEPTION/">HANDLER FOR SQLEXCEPTION</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CONTINUE/">CONTINUE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CURSOR/">CURSOR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FUNCTION/">FUNCTION</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TRIGGER/">TRIGGER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/권한부여/">권한부여</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/시스템테이블/">시스템테이블</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/B-트리-인덱스/" style="font-size: 10px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/CONTINUE/" style="font-size: 10px;">CONTINUE</a> <a href="/tags/CURSOR/" style="font-size: 10px;">CURSOR</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 15px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/FUNCTION/" style="font-size: 10px;">FUNCTION</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 15px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 10px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/TRIGGER/" style="font-size: 10px;">TRIGGER</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 10px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/권한부여/" style="font-size: 10px;">권한부여</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/시스템테이블/" style="font-size: 10px;">시스템테이블</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 JSH</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'onenineix';
+    
+    
+    var disqus_url = 'http://OneNineIx.github.io/2018/09/17/database-chap12/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
