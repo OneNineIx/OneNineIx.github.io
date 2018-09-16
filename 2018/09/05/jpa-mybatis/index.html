@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Spring Boot, REST 기반의 JPA 예제를 참조해 이를 스프링 마이바티스로 예제를 변경 | Joonseong H</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="jpa,mybatis,spring,java" />
+    
+    <meta name="description" content="Restfulresource의 고유한 URi을 가지고 get put post 등으로 접근하는 방식 JPA쿼리가 담긴 라이브러리 이다.자주 반복적으로 사용되는 쿼리를 메소드에 담아둔 라이브러리로, 메소드를 이용해 쿼리를 사용한다 Springboot Rest기반 JPA예제pom.xml1spring boot devtools : 소스코드 변경시 자동으로 서버를 재">
+<meta name="keywords" content="jpa,mybatis,spring,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot, REST 기반의 JPA 예제를 참조해 이를 스프링 마이바티스로 예제를 변경">
+<meta property="og:url" content="http://OneNineIx.github.io/2018/09/05/jpa-mybatis/index.html">
+<meta property="og:site_name" content="Joonseong H">
+<meta property="og:description" content="Restfulresource의 고유한 URi을 가지고 get put post 등으로 접근하는 방식 JPA쿼리가 담긴 라이브러리 이다.자주 반복적으로 사용되는 쿼리를 메소드에 담아둔 라이브러리로, 메소드를 이용해 쿼리를 사용한다 Springboot Rest기반 JPA예제pom.xml1spring boot devtools : 소스코드 변경시 자동으로 서버를 재">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/2770CB3E57D547741D">
+<meta property="og:updated_time" content="2018-09-05T09:10:14.209Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot, REST 기반의 JPA 예제를 참조해 이를 스프링 마이바티스로 예제를 변경">
+<meta name="twitter:description" content="Restfulresource의 고유한 URi을 가지고 get put post 등으로 접근하는 방식 JPA쿼리가 담긴 라이브러리 이다.자주 반복적으로 사용되는 쿼리를 메소드에 담아둔 라이브러리로, 메소드를 이용해 쿼리를 사용한다 Springboot Rest기반 JPA예제pom.xml1spring boot devtools : 소스코드 변경시 자동으로 서버를 재">
+<meta name="twitter:image" content="https://t1.daumcdn.net/cfile/tistory/2770CB3E57D547741D">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicons/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">IT blog / Thanks to everyone!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://onenineix.github.io/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/markdown/">markdown</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/">programing</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/database/">database</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/javascript/">javascript</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/mybatis/">mybatis</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/mybatis/">mybatis</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-jpa-mybatis" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Spring Boot, REST 기반의 JPA 예제를 참조해 이를 스프링 마이바티스로 예제를 변경
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/09/05/jpa-mybatis/" class="article-date">
+            <time datetime="2018-09-05T08:39:12.000Z" itemprop="datePublished">2018-09-05</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/java/">java</a>, <a class="tag-link" href="/tags/jpa/">jpa</a>, <a class="tag-link" href="/tags/mybatis/">mybatis</a>, <a class="tag-link" href="/tags/spring/">spring</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h4 id="Restful"><a href="#Restful" class="headerlink" title="Restful"></a>Restful</h4><p>resource의 고유한 URi을 가지고 <strong>get put post</strong> 등으로 접근하는 방식</p>
+<h4 id="JPA"><a href="#JPA" class="headerlink" title="JPA"></a>JPA</h4><p>쿼리가 담긴 라이브러리 이다.<br>자주 반복적으로 사용되는 쿼리를 메소드에 담아둔 라이브러리로, 메소드를 이용해 쿼리를 사용한다</p>
+<h2 id="Springboot-Rest기반-JPA예제"><a href="#Springboot-Rest기반-JPA예제" class="headerlink" title="Springboot Rest기반 JPA예제"></a>Springboot Rest기반 JPA예제</h2><p><strong>pom.xml</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring boot devtools : 소스코드 변경시 자동으로 서버를 재접속하는 일을 해준다.</span><br></pre></td></tr></table></figure></p>
+<p><strong>application.properties</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/bootrest?createDatabaseIfNotExist=true</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=1234</span><br><span class="line">spring.datasource.tomcat.max-wait=20000</span><br><span class="line">spring.datasource.tomcat.max-active=50</span><br><span class="line">spring.datasource.tomcat.max-idle=20</span><br><span class="line">spring.datasource.tomcat.min-idle=15</span><br><span class="line">spring.datasource.hikari.connection-test-query=SELECT 1</span><br><span class="line">​</span><br><span class="line">spring.jpa.hibernate.ddl-auto=create//  모델 클래스를 entity한 테이블을 자동으로 만들어줘라는 설정 update로 해두면 수정된사항만 저장된다.</span><br><span class="line">spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect  // 테이블 만들때 오류나서 이거해준다</span><br><span class="line">spring.jpa.properties.hibernate.id.new_generator_mappings=false</span><br><span class="line">spring.jpa.properties.hibernate.format_sql=true  // sql날라가는거 보여주세요</span><br><span class="line">​</span><br><span class="line">// 디버그 레벨의 로깅설정.</span><br><span class="line">logging.level.org.hibernate.SQL=DEBUG  </span><br><span class="line">logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-제일먼저-모델클래스-Emp를-만들어준다"><a href="#1-제일먼저-모델클래스-Emp를-만들어준다" class="headerlink" title="1. 제일먼저 모델클래스 Emp를 만들어준다."></a>1. 제일먼저 모델클래스 Emp를 만들어준다.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//엔티티 매핑 어노테이션</span><br><span class="line">//설정에 Entity로 해두었기 때문에 달아둔다.</span><br><span class="line">기본 생성자는 필수(파라미터가 없는 public 또는 protected 생성자) : 자바는 생성자가 하나도 없으면 기본 생성자를 자동으로 만듬</span><br><span class="line">저장할 필드에 final 은 불가능</span><br><span class="line">@Table(name=&quot;emp&quot;)//emp라는 이름의 테이블을 자동으로 만들어준다.</span><br><span class="line">@Data</span><br><span class="line">@AllArgsConstructor</span><br><span class="line">@NoArgsConstructor</span><br><span class="line">public class Emp implements Serializable&#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">	@Id // empno가 키값이 되고</span><br><span class="line">	@GeneratedValue(strategy = GenerationType.IDENTITY) // 키값을 자동으로 생성해준다.</span><br><span class="line">	private Integer empno;</span><br><span class="line"></span><br><span class="line">	private String ename;</span><br><span class="line"></span><br><span class="line">	private Integer sal;</span><br><span class="line">​</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<h3 id="2-메인에서-샘플데이터를-밀어넣어보자"><a href="#2-메인에서-샘플데이터를-밀어넣어보자" class="headerlink" title="2. 메인에서 샘플데이터를 밀어넣어보자"></a>2. 메인에서 샘플데이터를 밀어넣어보자</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.example.rest;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class SpringbootrestApplication implements CommandLineRunner&#123;// Run 메소드를 호출하기 위해서 인터페이스를 구현하고</span><br><span class="line">​</span><br><span class="line">	@Autowired</span><br><span class="line">	EmpRepository empRepository; // 레파지토리구현체의 메소드로 데이터를 만들어야 함으로 EmpRepository를 주입해주고</span><br><span class="line">​</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">​</span><br><span class="line">		SpringApplication.run(SpringbootrestApplication.class, args);//springbootmain이 run메소드를 호출해준다.</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public void run(String... args) throws Exception&#123; //CommandLineRunner의 run메소드를 만들어두면</span><br><span class="line">		empRepository.save(new Emp(1,&quot;홍길동&quot;,9000000));</span><br><span class="line">		empRepository.save(new Emp(2,&quot;김봉삼&quot;,3000000));</span><br><span class="line">		empRepository.save(new Emp(3,&quot;이진삼&quot;,6000000));</span><br><span class="line">		empRepository.save(new Emp(4,&quot;장봉창&quot;,7000000));</span><br><span class="line">		empRepository.save(new Emp(5,&quot;둘리&quot;,2000000));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-Emprepository를-만들자-쿼리가-담긴다"><a href="#3-Emprepository를-만들자-쿼리가-담긴다" class="headerlink" title="3. Emprepository를 만들자 (쿼리가 담긴다)"></a>3. Emprepository를 만들자 (쿼리가 담긴다)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">extends JpaRepository를 상속해주어 Jpa메소드들을 사용할수 있게한다.</span><br><span class="line">Emprepository extends JpaRepository&lt;Emp, Integer&gt; // 키값을 파라메터로 입력해주고</span><br><span class="line">​</span><br><span class="line">package com.example.rest.repository;</span><br><span class="line">​</span><br><span class="line">public interface EmpRepository extends JpaRepository&lt;Emp, Integer&gt;&#123;</span><br><span class="line">​</span><br><span class="line">	List&lt;Emp&gt; findBySalBetween(int sal1, int sal2); //두 파라메터의 사이에 있는 급여인 사원을 조회하려고 추상화한 메서드</span><br><span class="line">// 사원의 목록이니까 List이고 파라메터를 두개받아서 급여가 sal인 사원들의 목록을 Select하는 메소드</span><br><span class="line">// 쿼리 메소드, 메소드 이름으로 자동으로 SELECT 쿼리 생성</span><br><span class="line">// JPA에서 자동으로 생성하는 쿼리는 다음과 같다.</span><br><span class="line">// select</span><br><span class="line">// emp0_.empno as empno1_0_,</span><br><span class="line">// emp0_.ename as ename2_0_,</span><br><span class="line">// emp0_.sal as sal3_0_</span><br><span class="line">// from</span><br><span class="line">// emp emp0_</span><br><span class="line">// where</span><br><span class="line">// emp0_.sal between ? and ?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-Service를-만들어준다"><a href="#4-Service를-만들어준다" class="headerlink" title="4. Service를 만들어준다"></a>4. Service를 만들어준다</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.example.rest.service;</span><br><span class="line">​</span><br><span class="line">public interface EmpService &#123; // 메소드 이름은 내가 직접 만든것임. 구현할 객체에서 구체적인 쿼리가 담긴다.</span><br><span class="line">	List&lt;Emp&gt; findAll();  //모든사원 주세요</span><br><span class="line">​</span><br><span class="line">	Emp findById(int empno); // 사원 id로 하나의 사원 주세요</span><br><span class="line">​</span><br><span class="line">	void deleteById(int empno); // 사번주시고 삭제해주세요</span><br><span class="line">​</span><br><span class="line">	Emp save(Emp emp); // 이사원 저장해주세요</span><br><span class="line">​</span><br><span class="line">	List&lt;Emp&gt; findBySalBetween(int sal1, int sal2); //이거하나만 레파지토리에서 jpa로 만들었다.</span><br><span class="line">​</span><br><span class="line">	void updateById(int empno, Emp emp);  // 이 사원을 (Emp emp)에 던져주는 객체에 수정해주세요</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-인터페이스의-구현체를-만든다"><a href="#4-인터페이스의-구현체를-만든다" class="headerlink" title="4. 인터페이스의 구현체를 만든다."></a>4. 인터페이스의 구현체를 만든다.</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">package com.example.rest.service;</span><br><span class="line">​</span><br><span class="line">@Service // 구현체니까 Service 애노테이션을 붙여준다</span><br><span class="line">public class EmpServiceImpl implements EmpService &#123;</span><br><span class="line">​</span><br><span class="line">	@Autowired  // EmpRepository를 자동주입했다 객체참조를 취득하였다.</span><br><span class="line">	private EmpRepository empRepository;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public List&lt;Emp&gt; findAll() &#123;</span><br><span class="line">		List&lt;Emp&gt; emps = new ArrayList&lt;&gt;();  // ArrayList로 emps를 만들고</span><br><span class="line">		empRepository.findAll().forEach(e -&gt; emps.add(e));</span><br><span class="line">// 객체참조를 얻은 empRepository의 findAll()메소드를 불러주고</span><br><span class="line">// forEach로 돌리면서 컬렉션 emps에 add시켜놓고</span><br><span class="line">		return emps;</span><br><span class="line">//emps컬렉션을 되돌려준다</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public Emp findById(int empno) &#123;</span><br><span class="line">		Emp emp = empRepository.findById(empno).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Emp&quot;, &quot;empno&quot;, empno)); // empRepository의 기본제공메소드 직접 만들지는 않았다.</span><br><span class="line">//empno(사번)을 던져주고 사원을 조회해주는 메소드 사번 없으면 orElseThrow로 ResourceNotFoundException(직접만든 예외)가 발생한다.</span><br><span class="line">		return emp;</span><br><span class="line">//한명의사원 돌려준다.</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public void deleteById(int empno) &#123; // 지우고서 행동을 종료하기 때문에 리턴이 없으므로 타입은 void이다</span><br><span class="line">		empRepository.deleteById(empno); //JpaRepository의 객체참조를 취득한 empRepository의 delete메소드에 사번을 주고 호출하면 지워진다</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public Emp save(Emp emp) &#123;</span><br><span class="line">		empRepository.save(emp);</span><br><span class="line">		return emp;</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public List&lt;Emp&gt; findBySalBetween(int sal1, int sal2) &#123;// 급여가 두 파라미터의 사이에 해당되는 사원의 급여를 조회하는 메서드</span><br><span class="line">		List&lt;Emp&gt; emps = empRepository.findBySalBetween(sal1, sal2);</span><br><span class="line">		System.out.println(emps.size() + &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot; + sal1 + sal2);</span><br><span class="line">		if (emps.size() &gt; 0) &#123; // 사이즈가 0보다 크면 되돌려주고</span><br><span class="line">			return emps;</span><br><span class="line">		&#125; else &#123; // 아니면 널을 되돌려준다.</span><br><span class="line">			return null;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	@Override</span><br><span class="line">	public void updateById(int empno, Emp emp) &#123;// @RequestBody같은것으로 받는다</span><br><span class="line">		Emp e = empRepository.findById(empno).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Emp&quot;, &quot;empno&quot;, empno)); // 먼저 수정할 사원을 사번파라메터로 추출하고</span><br><span class="line">		e.setEname(emp.getEname()); //추출한 사원의 이름을 수정하고</span><br><span class="line">		e.setSal(emp.getSal()); //추출한 사원의 급여를 수정하고</span><br><span class="line">​</span><br><span class="line">		empRepository.save(emp); // save를 호출함으로써 데이터베이스에 반영했다.</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-HTTP가-404error일때"><a href="#5-HTTP가-404error일때" class="headerlink" title="5. HTTP가 404error일때"></a>5. HTTP가 404error일때</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package com.example.rest.exception;</span><br><span class="line">​</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseStatus;</span><br><span class="line">import org.springframework.http.HttpStatus;</span><br><span class="line">​</span><br><span class="line">@ResponseStatus(value = HttpStatus.NOT_FOUND) // HTTP가 404error일때 발생되도록</span><br><span class="line">public class ResourceNotFoundException extends RuntimeException&#123;</span><br><span class="line">​</span><br><span class="line">	private String resourceName; // 리소스 이름</span><br><span class="line">	private String fieldName; //필드 이름</span><br><span class="line">	private Object fieldValue; // 필드 값</span><br><span class="line"></span><br><span class="line">	public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) &#123;</span><br><span class="line">		super(String.format(&quot;%s not found with %s : %s&quot;, resourceName, fieldName, fieldValue)); // 파라메터 3개받아서 필드변경</span><br><span class="line">//&quot;%s not found with %s(몇번사원) : %s(사원ID)&quot;</span><br><span class="line">		this.resourceName = resourceName;</span><br><span class="line">		this.fieldName = fieldName;</span><br><span class="line">		this.fieldValue = fieldValue;</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	public String getResourceName() &#123;</span><br><span class="line">		return resourceName;</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	public String getFieldName() &#123;</span><br><span class="line">		return fieldName;</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">	public Object getFieldValue() &#123;</span><br><span class="line">		return fieldValue;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="6-Controller를-만들자"><a href="#6-Controller를-만들자" class="headerlink" title="6. Controller를 만들자"></a>6. Controller를 만들자</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">package com.example.rest.controller;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">@RestController //Rest컨트롤러 이므로 레스트컨트롤러로 하고</span><br><span class="line">@RequestMapping(&quot;emp&quot;)  //http://localhost:8080/emp 로 들어올때 사용하는 어노테이션 생략시 8080만 입력하는게 디폴트</span><br><span class="line">public class EmpController &#123;</span><br><span class="line">	@Autowired // 서비스 구현체를 주입했다.</span><br><span class="line">	private EmpService empService;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">	@GetMapping(produces = &#123; MediaType.APPLICATION_JSON_VALUE &#125;) // JSON이니까 Media타입이라고? 썼다. 모든사원 조회, GET, Localhost:8080/emp</span><br><span class="line">	public ResponseEntity&lt;List&lt;Emp&gt;&gt; getAllEmps() &#123; //ResponseEntity는 Rest니까 주는 타입?인거같고 여러명을 조회하는것이라 &lt;List&lt;Emp&gt;&gt;로 주었다. 한명의사원이라면 Emp만</span><br><span class="line">		List&lt;Emp&gt; emps = empService.findAll(); emps에 findAll()메소드로 모든사원을 조회해 담아주고</span><br><span class="line">		return new ResponseEntity&lt;List&lt;Emp&gt;&gt;(emps, HttpStatus.OK);  // 이렇게 돌려준다</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">//포스트맨으로 테스트하자</span><br><span class="line">	@GetMapping(value = &quot;/&#123;empno&#125;&quot;, produces = &#123; MediaType.APPLICATION_JSON_VALUE &#125;)//empno로 한명의사원 조회, GET, Localhost:8080/emp/(empno사번)</span><br><span class="line">	public ResponseEntity&lt;Emp&gt; getEmp(@PathVariable(&quot;empno&quot;) int empno) &#123;</span><br><span class="line">//URL경로에 들어온값을 파라메터로 받아내려면@PathVariable(&quot;empno&quot;),  (value = &quot;/&#123;empno&#125;&quot;를 받아서  int empno</span><br><span class="line">		return new ResponseEntity&lt;Emp&gt;(empService.findById(empno), HttpStatus.OK); // ResponseEntity&lt;Emp&gt;에 담아서 리턴</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">// empno로 사원삭제</span><br><span class="line">	@DeleteMapping(value = &quot;/&#123;empno&#125;&quot;, produces = &#123; MediaType.APPLICATION_JSON_VALUE &#125;) //@DeleteMapping : HTTP요청 메소드만 다르다.(rest방식)</span><br><span class="line">	public ResponseEntity&lt;Void&gt; deleteEmp(@PathVariable(&quot;empno&quot;) int empno) &#123;</span><br><span class="line">		empService.deleteById(empno);</span><br><span class="line">		return new ResponseEntity&lt;Void&gt;(HttpStatus.OK);</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">// empno로 사원 수정(empno로 사원 찾아 인자로 넘어오는 Emp 객체의 ename, sal로 수정함)</span><br><span class="line">	@PutMapping(value = &quot;/&#123;empno&#125;&quot;, produces = &#123; MediaType.APPLICATION_JSON_VALUE &#125;)// PUT, Localhost:8080/emp/(empno사번)</span><br><span class="line">	public ResponseEntity&lt;Emp&gt; updateEmp(@PathVariable(&quot;empno&quot;) int empno,  //수정할 대상이 되는 target파라메터</span><br><span class="line">@RequestBody Emp emp) &#123; // @RequestBody로 들어온사원객체 이런거 던져주는 테스트할려고 포스트맨씀</span><br><span class="line">		empService.updateById(empno, emp); // 수정해주고</span><br><span class="line">		return new ResponseEntity&lt;Emp&gt;(emp, HttpStatus.OK); //수정한 emp를 인자로 받아 ResponseEntity&lt;Emp&gt;에 담아 던져줬다.</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">//사원입력</span><br><span class="line">	@PostMapping// 한명의 사원을 입력하는 컨트롤러 메소드</span><br><span class="line">	public ResponseEntity&lt;Emp&gt; save(@RequestBody Emp emp) &#123;//@RequestBody으로 들어오는 Emp객체로 자동으로 바인딩해서 받아내고(empno,ename)</span><br><span class="line">		return new ResponseEntity&lt;Emp&gt;(empService.save(emp), HttpStatus.OK); //저장</span><br><span class="line">	&#125;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">//급여를 기준으로 사원 검색 (sal&gt;sal1 and sal&lt;sal2)</span><br><span class="line">	@GetMapping(value = &quot;/&#123;sal1&#125;/&#123;sal2&#125;&quot;)//   &quot;/&#123;sal1&#125;/&#123;sal2&#125;&quot;형태로 요청  http://Localhost:8080/emp/0(급여sal1)/8000000(급여sal2)  : 급여가 0에서 800만사이인 사원 조회</span><br><span class="line">	public ResponseEntity&lt;List&lt;Emp&gt;&gt; getEmpBySalBetween(@PathVariable int sal1,  // URL경로에 대한 값</span><br><span class="line">@PathVariable int sal2) &#123;  // URL경로에 대한 값</span><br><span class="line">		List&lt;Emp&gt; emps = empService.findBySalBetween(sal1, sal2);</span><br><span class="line">		return new ResponseEntity&lt;List&lt;Emp&gt;&gt;(emps, HttpStatus.OK);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="마이바티스로-변경"><a href="#마이바티스로-변경" class="headerlink" title="마이바티스로 변경"></a>마이바티스로 변경</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.example.mybatis;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.CommandLineRunner;</span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import com.example.mybatis.model.Emp;</span><br><span class="line">import com.example.mybatis.repository.EmpRepository;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class SpringbootjpachangemybatisApplication implements CommandLineRunner&#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	EmpRepository empRepository;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		SpringApplication.run(SpringbootjpachangemybatisApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void run(String... args) throws Exception &#123;</span><br><span class="line">		empRepository.save(new Emp(1,&quot;홍길동&quot;,9000000));</span><br><span class="line">		empRepository.save(new Emp(2,&quot;김봉삼&quot;,3000000));</span><br><span class="line">		empRepository.save(new Emp(3,&quot;김갑수&quot;,6000000));</span><br><span class="line">		empRepository.save(new Emp(4,&quot;조춘현&quot;,7000000));</span><br><span class="line">		empRepository.save(new Emp(5,&quot;둘리&quot;,2000000));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package com.example.mybatis.Controller;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.ui.Model;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line">import org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line">import com.example.mybatis.model.Emp;</span><br><span class="line">import com.example.mybatis.repository.EmpRepository;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line"></span><br><span class="line">public class EmpController &#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	EmpRepository empRepository;</span><br><span class="line"></span><br><span class="line">	@RequestMapping(value=&quot;/emps&quot;, method=RequestMethod.GET, params=&quot;json&quot;)</span><br><span class="line">	@ResponseBody</span><br><span class="line">	public Object userJson() &#123;</span><br><span class="line">		System.out.println(&quot;조건3개 ?json empsJson호출&quot;);</span><br><span class="line">		List&lt;Emp&gt; emps = empRepository.findAll();</span><br><span class="line">		return emps;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	@RequestMapping(value=&quot;/emps&quot;, method=RequestMethod.GET)</span><br><span class="line"></span><br><span class="line">	public Object userHome(Model model) &#123;</span><br><span class="line">		System.out.println(&quot;조건2개 userJson호출&quot;);</span><br><span class="line">		List&lt;Emp&gt; emps = empRepository.findAll();</span><br><span class="line">		model.addAttribute(&quot;emps&quot;, emps );</span><br><span class="line">		System.out.println(&quot;조건2개 userJson호출&quot;);</span><br><span class="line">		return &quot;Emp_list&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package com.example.mybatis.mapper;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.apache.ibatis.annotations.Delete;</span><br><span class="line">import org.apache.ibatis.annotations.Insert;</span><br><span class="line">import org.apache.ibatis.annotations.Mapper;</span><br><span class="line">import org.apache.ibatis.annotations.Param;</span><br><span class="line">import org.apache.ibatis.annotations.Result;</span><br><span class="line">import org.apache.ibatis.annotations.ResultType;</span><br><span class="line">import org.apache.ibatis.annotations.Results;</span><br><span class="line">import org.apache.ibatis.annotations.Select;</span><br><span class="line">import org.apache.ibatis.annotations.Update;</span><br><span class="line"></span><br><span class="line">import com.example.mybatis.model.Emp;</span><br><span class="line"></span><br><span class="line">@Mapper</span><br><span class="line">public interface EmpMapper &#123;</span><br><span class="line">	@Select(&quot;SELECT * FROM emp ORDER BY empno ASC&quot;)</span><br><span class="line">	@ResultType(Emp.class)</span><br><span class="line">	public List&lt;Emp&gt; findAll();</span><br><span class="line"></span><br><span class="line">	@Select(&quot;SELECT * FROM emp WHERE empno = #&#123;empno&#125;&quot;)</span><br><span class="line">	@Results(id = &quot;empResultMap&quot;, value = &#123; @Result(property = &quot;empno&quot;, column = &quot;empno&quot;),</span><br><span class="line">			@Result(property = &quot;ename&quot;, column = &quot;ename&quot;), @Result(property = &quot;sal&quot;, column = &quot;sal&quot;) &#125;)</span><br><span class="line">	public Emp findById(int empno);</span><br><span class="line"></span><br><span class="line">	@Delete(&quot;DELETE FROM emp WHERE empno = #&#123;empno&#125;&quot;)</span><br><span class="line">	public void deleteById(int empno);</span><br><span class="line"></span><br><span class="line">	@Insert(&quot;INSERT into emp(empno,ename,sal) VALUES(#&#123;empno&#125;, #&#123;ename&#125;,#&#123;sal&#125;)&quot;)</span><br><span class="line">	public void save(Emp emp);</span><br><span class="line"></span><br><span class="line">	@Select(&quot;SELECT * FROM emp WHERE sal &gt; #&#123;sal1&#125; and sal &lt; #&#123;sal2&#125;&quot;)</span><br><span class="line">	public List&lt;Emp&gt; findBySalBetween(@Param(&quot;sal1&quot;) int sal1, @Param(&quot;sal2&quot;) int sal2);</span><br><span class="line"></span><br><span class="line">	@Update(&quot;UPDATE emp SET ename = #&#123;emp.ename&#125;, sal=#&#123;emp.sal&#125; WHERE empno = #&#123;eno&#125;&quot;)</span><br><span class="line">	public void updateById(@Param(&quot;eno&quot;) int empno, @Param(&quot;emp&quot;) Emp emp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.example.mybatis.model;</span><br><span class="line"></span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">import javax.persistence.Entity;</span><br><span class="line">import javax.persistence.GeneratedValue;</span><br><span class="line">import javax.persistence.GenerationType;</span><br><span class="line">import javax.persistence.Id;</span><br><span class="line">import javax.persistence.Table;</span><br><span class="line"></span><br><span class="line">import lombok.AllArgsConstructor;</span><br><span class="line">import lombok.Data;</span><br><span class="line">import lombok.NoArgsConstructor;</span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">@Table(name = &quot;emp&quot;)</span><br><span class="line">@Data</span><br><span class="line">@AllArgsConstructor</span><br><span class="line">@NoArgsConstructor</span><br><span class="line">public class Emp implements Serializable &#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line"></span><br><span class="line">	@Id</span><br><span class="line">	@GeneratedValue(strategy = GenerationType.IDENTITY)</span><br><span class="line">	private Integer empno;</span><br><span class="line"></span><br><span class="line">	private String ename;</span><br><span class="line"></span><br><span class="line">	private Integer sal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package com.example.mybatis.repository;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line">import com.example.mybatis.mapper.EmpMapper;</span><br><span class="line">import com.example.mybatis.model.Emp;</span><br><span class="line"></span><br><span class="line">@Repository</span><br><span class="line">public class EmpRepository &#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	EmpMapper mapper;</span><br><span class="line"></span><br><span class="line">	public List&lt;Emp&gt; findAll()&#123;</span><br><span class="line">		return mapper.findAll();</span><br><span class="line">	&#125;</span><br><span class="line">	public Emp findById(int empno) &#123;</span><br><span class="line">		return mapper.findById(empno);</span><br><span class="line">	&#125;</span><br><span class="line">	public void deleteById(int empno)&#123;</span><br><span class="line">		mapper.deleteById(empno);</span><br><span class="line">	&#125;</span><br><span class="line">	public void save(Emp emp) &#123;</span><br><span class="line">		mapper.save(emp);</span><br><span class="line">	&#125;</span><br><span class="line">	public List&lt;Emp&gt; findBySalBetween(int sal1, int sal2)&#123;</span><br><span class="line">		return mapper.findBySalBetween(sal1, sal2);</span><br><span class="line">	&#125;</span><br><span class="line">	public void updateById(int empno, Emp emp) &#123;</span><br><span class="line">		mapper.updateById(empno, emp);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>application.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/bootrest?createDatabaseIfNotExist=true</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=1234</span><br><span class="line">spring.datasource.tomcat.max-wait=20000</span><br><span class="line">spring.datasource.tomcat.max-active=50</span><br><span class="line">spring.datasource.tomcat.max-idle=20</span><br><span class="line">spring.datasource.tomcat.min-idle=15</span><br><span class="line">spring.datasource.initialization-mode=never</span><br><span class="line">spring.jpa.hibernate.ddl-auto=create</span><br><span class="line"></span><br><span class="line">spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect</span><br><span class="line">spring.jpa.properties.hibernate.id.new_generator_mappings=false</span><br><span class="line">spring.jpa.properties.hibernate.format_sql=true</span><br><span class="line"></span><br><span class="line">mybatis.configuration.map-underscore-to-camel-case=true</span><br><span class="line">mybatis.configuration.default-fetch-size=100</span><br><span class="line">mybatis.configuration.default-statement-timeout=30</span><br><span class="line"></span><br><span class="line">logging.level.org.hibernate.SQL=DEBUG</span><br><span class="line">logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE</span><br><span class="line"></span><br><span class="line">spring.mvc.view.prefix=/WEB-INF/views/</span><br><span class="line">spring.mvc.view.suffix=.jsp</span><br><span class="line"></span><br><span class="line">logging.config=classpath:logback-spring.xml  </span><br><span class="line"></span><br><span class="line">spring.http.encoding.charset=UTF-8</span><br><span class="line">spring.http.encoding.enabled=true</span><br><span class="line">spring.http.encoding.force=true</span><br></pre></td></tr></table></figure></p>
+<p>jsp<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;fmt&quot; uri=&quot;http://java.sun.com/jsp/jstl/fmt&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=EUC-KR&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">		&lt;table&gt;</span><br><span class="line">			&lt;thead&gt;</span><br><span class="line">				&lt;tr&gt;</span><br><span class="line">					&lt;th class=&quot;col-xs-1 col-sm-1 col-md-1 col-lg-1&quot;&gt;No&lt;/th&gt;</span><br><span class="line">					&lt;th class=&quot;col-xs-2 col-sm-2 col-md-2 col-lg-2&quot;&gt;Writer&lt;/th&gt;</span><br><span class="line">					&lt;th class=&quot;col-xs-2 col-sm-2 col-md-2 col-lg-2&quot;&gt;Sal&lt;/th&gt;</span><br><span class="line">				&lt;/tr&gt;</span><br><span class="line">			&lt;/thead&gt;</span><br><span class="line">			&lt;tbody&gt;</span><br><span class="line">				&lt;c:forEach items=&quot;#&#123;emps &#125;&quot; var=&quot;b&quot;&gt;</span><br><span class="line">					&lt;tr&gt;</span><br><span class="line">						&lt;td&gt;$&#123;b.empno &#125;&lt;/td&gt;</span><br><span class="line">						&lt;td&gt;$&#123;b.ename &#125;&lt;/td&gt;</span><br><span class="line">						&lt;td&gt;$&#123;b.sal &#125;&lt;/td&gt;</span><br><span class="line">					&lt;/tr&gt;</span><br><span class="line">				&lt;/c:forEach&gt;</span><br><span class="line">			&lt;/tbody&gt;</span><br><span class="line">		&lt;/table&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>pom.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">	&lt;groupId&gt;com.example&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mybatis&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">	&lt;name&gt;springbootjpachangemybatis&lt;/name&gt;</span><br><span class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">	&lt;parent&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">		&lt;version&gt;2.0.3.RELEASE&lt;/version&gt;</span><br><span class="line">		&lt;relativePath /&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">	&lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">	&lt;properties&gt;</span><br><span class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">	&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;dependencies&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.hibernate&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;</span><br><span class="line"></span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.hibernate&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;hibernate-entitymanager&lt;/artifactId&gt;</span><br><span class="line"></span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa --&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;</span><br><span class="line"></span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.2.2&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;commons-dbcp&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;commons-dbcp&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.2.2&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;com.oracle&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;ojdbc6&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;11.2.0.3&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-data-jpa&lt;/artifactId&gt;</span><br><span class="line"></span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">			&lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;javax.xml.bind&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;jaxb-api&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;</span><br><span class="line">			&lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">			&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;jstl&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.bgee.log4jdbc-log4j2&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;log4jdbc-log4j2-jdbc4.1&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.16&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt;</span><br><span class="line">			&lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.bgee.log4jdbc-log4j2&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;log4jdbc-log4j2-jdbc4.1&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;1.16&lt;/version&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">	&lt;/dependencies&gt;</span><br><span class="line">	&lt;repositories&gt;</span><br><span class="line">		&lt;repository&gt;</span><br><span class="line">			&lt;id&gt;codelds&lt;/id&gt;</span><br><span class="line">			&lt;url&gt;https://code.lds.org/nexus/content/groups/main-repo&lt;/url&gt;;</span><br><span class="line">		&lt;/repository&gt;</span><br><span class="line">	&lt;/repositories&gt;</span><br><span class="line">	&lt;build&gt;</span><br><span class="line">		&lt;plugins&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">		&lt;/plugins&gt;</span><br><span class="line">	&lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://OneNineIx.github.io/2018/09/05/jpa-mybatis/" data-id="cjm4qcsx60005mkvakirmfnvf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:onenineix@gmail.com" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/14/database1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            관계형 데이터베이스 모델링 (Entity - Relationship Model)
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/09/05/Star/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">자바스크립트로 별 찍기(다중 for문)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/14/database1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="관계형 데이터베이스 모델링 (Entity - Relationship Model)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/14/database1/" class="title">관계형 데이터베이스 모델링 (Entity - Relationship Model)</a></p>
+                            <p class="item-date"><time datetime="2018-09-14T07:17:55.000Z" itemprop="datePublished">2018-09-14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/05/jpa-mybatis/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://t1.daumcdn.net/cfile/tistory/2770CB3E57D547741D)" alt="Spring Boot, REST 기반의 JPA 예제를 참조해 이를 스프링 마이바티스로 예제를 변경" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/mybatis/">mybatis</a></p>
+                            <p class="item-title"><a href="/2018/09/05/jpa-mybatis/" class="title">Spring Boot, REST 기반의 JPA 예제를 참조해 이를 스프링 마이바티스로 예제를 변경</a></p>
+                            <p class="item-date"><time datetime="2018-09-05T08:39:12.000Z" itemprop="datePublished">2018-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/05/Star/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Five-pointed_star.svg/2000px-Five-pointed_star.svg.png)" alt="자바스크립트로 별 찍기(다중 for문)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/javascript/">javascript</a></p>
+                            <p class="item-title"><a href="/2018/09/05/Star/" class="title">자바스크립트로 별 찍기(다중 for문)</a></p>
+                            <p class="item-date"><time datetime="2018-09-05T06:56:51.000Z" itemprop="datePublished">2018-09-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/03/test/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://i0.wp.com/jnwhome.iptime.org/wordpress/wp-content/uploads/1/cfile25.uf.236D8D36568A660C1D2202.png?resize=672%2C372)" alt="마크다운(markdown)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hexo/">Hexo</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Hexo/markdown/">markdown</a></p>
+                            <p class="item-title"><a href="/2018/09/03/test/" class="title">마크다운(markdown)</a></p>
+                            <p class="item-date"><time datetime="2018-09-03T05:16:13.000Z" itemprop="datePublished">2018-09-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/30/hello-world/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://blog.yozi.kr/2018/01/02/hexo-command/hexo-logo.png)" alt="Hexo 포스트하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hexo/">Hexo</a></p>
+                            <p class="item-title"><a href="/2018/08/30/hello-world/" class="title">Hexo 포스트하기</a></p>
+                            <p class="item-date"><time datetime="2018-08-30T14:04:24.518Z" itemprop="datePublished">2018-08-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 JSH</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'onenineix';
+    
+    
+    var disqus_url = 'http://OneNineIx.github.io/2018/09/05/jpa-mybatis/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
