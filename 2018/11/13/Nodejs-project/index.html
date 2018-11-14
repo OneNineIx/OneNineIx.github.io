@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Nodejs_project | Joonseong H</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="javascript,nodejs" />
+    
+    <meta name="description" content="목차     1. 프로젝트 시작2. 게시판의 접근권한3. connect-flash모듈 경고메세지4. 회원가입5. bcrypt모듈을 이용한 사용자정보 암호화6. passport, express-session 모듈을 이용한 로그인구현7. 로그인 여부에 따른 접근권한8. 상태정보의 시각화9. 보안_자바스크립트 인젝션10. 보안_sql인젝션11. 그 외 세">
+<meta name="keywords" content="javascript,nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs_project">
+<meta property="og:url" content="http://OneNineIx.github.io/2018/11/13/Nodejs-project/index.html">
+<meta property="og:site_name" content="Joonseong H">
+<meta property="og:description" content="목차     1. 프로젝트 시작2. 게시판의 접근권한3. connect-flash모듈 경고메세지4. 회원가입5. bcrypt모듈을 이용한 사용자정보 암호화6. passport, express-session 모듈을 이용한 로그인구현7. 로그인 여부에 따른 접근권한8. 상태정보의 시각화9. 보안_자바스크립트 인젝션10. 보안_sql인젝션11. 그 외 세">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://t1.daumcdn.net/cfile/tistory/211B43475865B4201E">
+<meta property="og:updated_time" content="2018-11-14T21:01:04.928Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs_project">
+<meta name="twitter:description" content="목차     1. 프로젝트 시작2. 게시판의 접근권한3. connect-flash모듈 경고메세지4. 회원가입5. bcrypt모듈을 이용한 사용자정보 암호화6. passport, express-session 모듈을 이용한 로그인구현7. 로그인 여부에 따른 접근권한8. 상태정보의 시각화9. 보안_자바스크립트 인젝션10. 보안_sql인젝션11. 그 외 세">
+<meta name="twitter:image" content="https://t1.daumcdn.net/cfile/tistory/211B43475865B4201E">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicons/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">IT blog / Thanks to everyone!</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="https://onenineix.github.io/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/markdown/">markdown</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/">programing</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/database/">database</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/javascript/">javascript</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/mybatis/">mybatis</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/programing/nodejs/">nodejs</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/programing/nodejs/">nodejs</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="[layout]-Nodejs-project" class="article article-single article-type-[layout]" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Nodejs_project
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/11/13/Nodejs-project/" class="article-date">
+            <time datetime="2018-11-12T21:21:06.000Z" itemprop="datePublished">2018-11-13</time>
+        </a>
+    </div>
+
+		
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/javascript/">javascript</a>, <a class="tag-link" href="/tags/nodejs/">nodejs</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><a id="chap-0"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">목차</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="#chap-1">1. 프로젝트 시작</a><br><a href="#chap-2">2. 게시판의 접근권한</a><br><a href="#chap-3">3. connect-flash모듈 경고메세지</a><br><a href="#chap-4">4. 회원가입</a><br><a href="#chap-5">5. bcrypt모듈을 이용한 사용자정보 암호화</a><br><a href="#chap-6">6. passport, express-session 모듈을 이용한 로그인구현</a><br><a href="#chap-7">7. 로그인 여부에 따른 접근권한</a><br><a href="#chap-8">8. 상태정보의 시각화</a><br><a href="#chap-9">9. 보안_자바스크립트 인젝션</a><br><a href="#chap-10">10. 보안_sql인젝션</a><br><a href="#chap-10">11. 그 외 세부기능</a><br><a href="#chap-10">12. 마이페이지</a></td>
+</tr>
+</tbody>
+</table>
+<p><a id="chap-1"></a><br>안녕하세요 nodejs와 몇가지 모듈들로 게시판을 만들어 보았습니다.</p>
+<img src="/2018/11/13/Nodejs-project/1.PNG" title="joonseong">
+<p><a id="chap-2"></a><br>로그인을 하지 않은상태에서도 게시판의 내용과 댓글은 확인할 수 있도록 하였습니다.</p>
+<img src="/2018/11/13/Nodejs-project/2.PNG" title="joonseong">
+<img src="/2018/11/13/Nodejs-project/3.png" title="joonseong">
+<hr>
+<p><a id="chap-3"></a></p>
+<h2 id="connect-flash모듈-경고메세지"><a href="#connect-flash모듈-경고메세지" class="headerlink" title="connect-flash모듈 경고메세지"></a>connect-flash모듈 경고메세지</h2><p>글의 수정이나 mypage로의 이동은 로그인한 상태에서만 가능하도록 구현하였는데요.</p>
+<p>또 그에대한 경고사항을 <strong>connect-flash</strong> 라는 모듈을 사용해서<br>세션에 상황에 맞는 경고메세지를 추가해 웹에 보여주도록 하였습니다.</p>
+<img src="/2018/11/13/Nodejs-project/4.png" title="joonseong">
+<img src="/2018/11/13/Nodejs-project/5.png" title="joonseong">
+<p>이 모듈은 <strong>휘발성</strong>이라 한번 사용되고 나서는 사라지는 특성으로  사용자에게 <strong>경고메시지 피드백</strong>을 전달하기에 좋아 사용하였습니다.</p>
+<hr>
+<p><a id="chap-4"></a></p>
+<h2 id="회원가입"><a href="#회원가입" class="headerlink" title="회원가입"></a>회원가입</h2><p>회원가입시에는 <strong>emailCheck()</strong> 라는 함수를 만들어서<br><img src="/2018/11/13/Nodejs-project/6.png" title="joonseong"><br>사용자가 입력한 이메일이 <strong>이미 디비에 같은 이메일주소가 존재하는지</strong>를 검토하도록 하였는데요.</p>
+<img src="/2018/11/13/Nodejs-project/7.png" title="joonseong">
+<p>emailCheck()가 <strong>true를 반환하면</strong> 경고메시지를 출력하고, <strong>false일 경우</strong> 다음 조건문들이 실행됩니다.<br>이메일을 입력하였는지, 입력한 비밀번호 2개가 동일한지 정도를 체크하도록 하였습니다.<br><img src="/2018/11/13/Nodejs-project/8.png" title="joonseong"><br><img src="/2018/11/13/Nodejs-project/9.png" title="joonseong"><br><img src="/2018/11/13/Nodejs-project/10.png" title="joonseong"><br>이와같이 해당하는 부분에도 connect-flash모듈을 사용해서<br><strong>사용자에게 피드백을 전달해 어떤 부분이 잘못 작성되었는지 혼동하지 않도록</strong> 하였습니다.</p>
+<hr>
+<p><a id="chap-5"></a></p>
+<h2 id="bcrypt모듈을-이용한-사용자정보-암호화"><a href="#bcrypt모듈을-이용한-사용자정보-암호화" class="headerlink" title="bcrypt모듈을 이용한 사용자정보 암호화"></a>bcrypt모듈을 이용한 사용자정보 암호화</h2><p>그리고 그 모든 조건문을 벗어나면<br>bcrypt 라는 보안모듈을 사용해 사용자의 비밀번호를 암호화해서 db에 저장하도록 했는데요.</p>
+<img src="/2018/11/13/Nodejs-project/11.png" title="joonseong">
+<p><strong>사용자가 입력한 비밀번호 pwd를</strong> 10번 솔트하여 <strong>hash값</strong>으로 반환하면 그 값을 user테이블의 password 컬럼에 저장하도록 하였습니다.</p>
+<p><strong>bcrypt</strong> 라는 모듈은 사용자가 입력한 비밀번호를 <strong>웹의 관리자도 알아볼수 없도록</strong> 해쉬값으로 변환 해주는데요.</p>
+<img src="/2018/11/13/Nodejs-project/12.png" title="joonseong">
+<p>이와같이 저장된 모습을 볼수 있습니다.</p>
+<hr>
+<p><a id="chap-6"></a></p>
+<h2 id="passport-express-session-모듈을-이용한-로그인구현"><a href="#passport-express-session-모듈을-이용한-로그인구현" class="headerlink" title="passport, express-session 모듈을 이용한 로그인구현"></a>passport, express-session 모듈을 이용한 로그인구현</h2><p>로그인에 사용된 모듈은 <strong>passport</strong>와 <strong>express-session</strong>을 이용하였습니다.<br><img src="/2018/11/13/Nodejs-project/13.png" title="joonseong"><br>사용자가 전송한 email로 데이터베이스를 조회해서 해당하는 로우가 존재하면<br><img src="/2018/11/13/Nodejs-project/14.png" title="joonseong"><br><img src="/2018/11/13/Nodejs-project/15.png" title="joonseong"></p>
+<p><strong>bcrypt모듈의 compare함수</strong>로 사용자가 입력한 password를 다시 해당하는 <strong>해쉬값으로 변환해서 데이터베이스와 대조</strong>하고 일치여부에 따라 로그인에 성공하고<br><img src="/2018/11/13/Nodejs-project/16.png" title="joonseong"></p>
+<p>passport의 <strong>serializeUser로 세션에 식별자값을 추가</strong>하는 방식입니다.<br><img src="/2018/11/13/Nodejs-project/17.png" title="joonseong"><br><img src="/2018/11/13/Nodejs-project/18.png" title="joonseong"><br>passport의 <strong>deserialize는 페이지를 이동할 때마다 호출</strong>되는데요.<br>세션에 저장된 정보로 데이터베이스와 <strong>세션정보를 비교해 로그인 상태를 확인</strong>합니다.<br><img src="/2018/11/13/Nodejs-project/19.png" title="joonseong"></p>
+<hr>
+<p><a id="chap-7"></a></p>
+<h2 id="로그인-여부에-따른-접근권한"><a href="#로그인-여부에-따른-접근권한" class="headerlink" title="로그인 여부에 따른 접근권한"></a>로그인 여부에 따른 접근권한</h2><p>그리고 <strong>세션에 저장된 이메일정보로 로그인 상태 여부를 확인</strong>할 수 있는 <strong>isOwner함수</strong>를 만들어서</p>
+<img src="/2018/11/13/Nodejs-project/20.png" title="joonseong">
+<p>사용자의 <strong>로그인상태에 따라 접근권한을 제한</strong>하였습니다.</p>
+<img src="/2018/11/13/Nodejs-project/21.png" title="joonseong">
+<hr>
+<p><a id="chap-8"></a></p>
+<h2 id="상태정보의-시각화"><a href="#상태정보의-시각화" class="headerlink" title="상태정보의 시각화"></a>상태정보의 시각화</h2><p>또 <strong>statusUI라는 함수</strong>를 만들어서 isOwner가 true일때 <strong>로그인/회원가입 부분을 사용자의 email주소와 로그아웃 버튼으로 치환</strong>하도록 하고<br><img src="/2018/11/13/Nodejs-project/22.png" title="joonseong"><br><strong>사용자가 라우팅된 위치를 시각화</strong> 하기위해 해당하는 위치에서 statusUI를 인자로 주어 <strong>태그 속성을 active로 치환</strong>하도록 하였습니다.<br><img src="/2018/11/13/Nodejs-project/23.png" title="joonseong"><br><img src="/2018/11/13/Nodejs-project/24.png" title="joonseong"><br><img src="/2018/11/13/Nodejs-project/25.png" title="joonseong"></p>
+<hr>
+<p><a id="chap-9"></a></p>
+<h2 id="자바스크립트-인젝션"><a href="#자바스크립트-인젝션" class="headerlink" title="자바스크립트 인젝션"></a>자바스크립트 인젝션</h2><p>자바스크립트 인젝션을 예방하기 위해서 <strong>sanitize-html</strong>모듈을 사용하였는데요</p>
+<img src="/2018/11/13/Nodejs-project/26.png" title="joonseong">
+<p>사용자가 입력한 정보에 <strong>자바스크립트 코드가 있을경우 이것을 무시</strong>하도록 하는 모듈입니다.<br><img src="/2018/11/13/Nodejs-project/27.png" title="joonseong"></p>
+<p>이와같이 입력해주고 데이터베이스 전달했지만 내용이 표시되지 않고 자바스크립트 코드가 작동하지 않는걸 확인할 수 있죠.</p>
+<hr>
+<p><a id="chap-10"></a></p>
+<h2 id="SQL인젝션"><a href="#SQL인젝션" class="headerlink" title="SQL인젝션"></a>SQL인젝션</h2><p>mysql모듈에는 sql인젝션을 막을수 있는 기능이 포함되어 있는데요.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:3000/topic/18;drop table board;</span><br></pre></td></tr></table></figure></p>
+<p>이와같이 세미콜론 뒤에 쿼리를 작성하는 방식의 공격을 하더라도<br><img src="/2018/11/13/Nodejs-project/28.png" title="joonseong"><br><strong>사용자가 입력한 파라미터를 문자열로 치환</strong>해서 쿼리가 동작하지 않도록 하게됩니다.</p>
+<p>가령 이런식으로 바뀌게 되는 것이죠.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT board.id AS boardid,comment.*,SUBSTR(comment.date,1,16) AS datetime </span><br><span class="line">FROM board LEFT JOIN comment </span><br><span class="line">ON board.id=comment.board_id  </span><br><span class="line">WHERE board.id=<span class="string">'18;drop table board;'</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p><a id="chap-11"></a></p>
+<h2 id="그-외-세부기능"><a href="#그-외-세부기능" class="headerlink" title="그 외 세부기능"></a>그 외 세부기능</h2><p>그외 세부적인 기능으로는 각각의 유저만이 <strong>자신이 작성한 글과 댓글을 삭제,수정이 가능</strong>하도록 하였구요.</p>
+<p>게시물을 삭제하면 <strong>그에 해당하는 댓글이 먼저 db에서 삭제된 다음에 게시물이 삭제</strong>되도록 하였습니다.<br><img src="/2018/11/13/Nodejs-project/29.png" title="joonseong"></p>
+<hr>
+<p><a id="chap-12"></a></p>
+<h2 id="마이페이지"><a href="#마이페이지" class="headerlink" title="마이페이지"></a>마이페이지</h2><p><strong>내가 작성한 글과 댓글을 mypage에서 확인</strong>할 수 있게하고 해당하는 글로 이동할 수도 있고 이곳에서 직접 삭제도 가능하게 하였습니다.<br><img src="/2018/11/13/Nodejs-project/30.png" title="joonseong"></p>
+<p>현재 내정보상태는 form의 placeholder속성으로 표시해두었구요.</p>
+<p><strong>회원정보의 수정</strong>도 가능하도록 하였습니다.</p>
+<img src="/2018/11/13/Nodejs-project/31.png" title="joonseong">
+<h3 id="감사합니다"><a href="#감사합니다" class="headerlink" title="감사합니다."></a>감사합니다.</h3><p><a href="#chap-0">처음으로</a></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://OneNineIx.github.io/2018/11/13/Nodejs-project/" data-id="cjohnoq160001q4vasq67s2h2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="envelope" href="mailto:onenineix@gmail.com" target="_blank" rel="noopener">
+                        <i class="icon fa fa-envelope"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/09/18/javascript-CRUD/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">CRUD</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/13/Nodejs-project/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://t1.daumcdn.net/cfile/tistory/211B43475865B4201E)" alt="Nodejs_project" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/nodejs/">nodejs</a></p>
+                            <p class="item-title"><a href="/2018/11/13/Nodejs-project/" class="title">Nodejs_project</a></p>
+                            <p class="item-date"><time datetime="2018-11-12T21:21:06.000Z" itemprop="datePublished">2018-11-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/18/javascript-CRUD/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/240px-Unofficial_JavaScript_logo_2.svg.png)" alt="CRUD" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/javascript/">javascript</a></p>
+                            <p class="item-title"><a href="/2018/09/18/javascript-CRUD/" class="title">CRUD</a></p>
+                            <p class="item-date"><time datetime="2018-09-17T16:18:11.000Z" itemprop="datePublished">2018-09-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/javascript-templateLiterel/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/240px-Unofficial_JavaScript_logo_2.svg.png)" alt="template Literal" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/javascript/">javascript</a></p>
+                            <p class="item-title"><a href="/2018/09/17/javascript-templateLiterel/" class="title">template Literal</a></p>
+                            <p class="item-date"><time datetime="2018-09-17T11:22:13.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap15/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="MySQL 예제모음 마무리" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap15/" class="title">MySQL 예제모음 마무리</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T21:57:02.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/17/database-chap14/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://upload.wikimedia.org/wikipedia/en/thumb/6/62/MySQL.svg/1200px-MySQL.svg.png)" alt="트랜잭션과 백업" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/programing/">programing</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/programing/database/">database</a></p>
+                            <p class="item-title"><a href="/2018/09/17/database-chap14/" class="title">트랜잭션과 백업</a></p>
+                            <p class="item-date"><time datetime="2018-09-16T20:34:36.000Z" itemprop="datePublished">2018-09-17</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/markdown/">markdown</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/">programing</a><span class="category-list-count">19</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/">database</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/">ROLLBACK</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/">COMMIT</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/">TRANSACTION</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programing/database/ROLLBACK/COMMIT/TRANSACTION/HANDLER-FOR-SQLEXCEPTION/">HANDLER FOR SQLEXCEPTION</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/javascript/">javascript</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/mybatis/">mybatis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/programing/nodejs/">nodejs</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/name/">${name}</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/B-트리-인덱스/">B+-트리 인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BETWEEN/">BETWEEN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CONTINUE/">CONTINUE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CURSOR/">CURSOR</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DELETE/">DELETE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EER-다이어그램/">EER 다이어그램</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ER모델링/">ER모델링</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FOREIGN-KEY/">FOREIGN KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FUNCTION/">FUNCTION</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GROUP-BY/">GROUP BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HAVING/">HAVING</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IN/">IN</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INDEX/">INDEX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/INSERT/">INSERT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IS-NULL/">IS NULL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LIKE/">LIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORDER-BY/">ORDER BY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PRIMARY-KEY/">PRIMARY KEY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TRIGGER/">TRIGGER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UPDATE/">UPDATE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WHERE/">WHERE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database-forward/">database_forward</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/for문/">for문</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/">jpa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/star/">star</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/templateLiteral/">templateLiteral</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/권한부여/">권한부여</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹질의/">그룹질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/그룹함수/">그룹함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/날짜함수/">날짜함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/명령어/">명령어</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/문자함수/">문자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/별찍기/">별찍기</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/부속질의/">부속질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/뷰/">뷰</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/숫자함수/">숫자함수</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/시스템테이블/">시스템테이블</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/외부조인/">외부조인</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/인덱스/">인덱스</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/제약조건/">제약조건</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/조인질의/">조인질의</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/집합연산/">집합연산</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/특수-연산자/">특수 연산자</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/형변환함수/">형변환함수</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/name/" style="font-size: 13.33px;">${name}</a> <a href="/tags/B-트리-인덱스/" style="font-size: 10px;">B+-트리 인덱스</a> <a href="/tags/BETWEEN/" style="font-size: 10px;">BETWEEN</a> <a href="/tags/CONTINUE/" style="font-size: 10px;">CONTINUE</a> <a href="/tags/CURSOR/" style="font-size: 10px;">CURSOR</a> <a href="/tags/DELETE/" style="font-size: 10px;">DELETE</a> <a href="/tags/EER-다이어그램/" style="font-size: 10px;">EER 다이어그램</a> <a href="/tags/ER모델링/" style="font-size: 13.33px;">ER모델링</a> <a href="/tags/FOREIGN-KEY/" style="font-size: 10px;">FOREIGN KEY</a> <a href="/tags/FUNCTION/" style="font-size: 10px;">FUNCTION</a> <a href="/tags/GROUP-BY/" style="font-size: 10px;">GROUP BY</a> <a href="/tags/HAVING/" style="font-size: 13.33px;">HAVING</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IN/" style="font-size: 10px;">IN</a> <a href="/tags/INDEX/" style="font-size: 10px;">INDEX</a> <a href="/tags/INSERT/" style="font-size: 10px;">INSERT</a> <a href="/tags/IS-NULL/" style="font-size: 10px;">IS NULL</a> <a href="/tags/LIKE/" style="font-size: 10px;">LIKE</a> <a href="/tags/MySQL/" style="font-size: 20px;">MySQL</a> <a href="/tags/ORDER-BY/" style="font-size: 10px;">ORDER BY</a> <a href="/tags/PRIMARY-KEY/" style="font-size: 10px;">PRIMARY KEY</a> <a href="/tags/TRIGGER/" style="font-size: 10px;">TRIGGER</a> <a href="/tags/UPDATE/" style="font-size: 10px;">UPDATE</a> <a href="/tags/WHERE/" style="font-size: 10px;">WHERE</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/database-forward/" style="font-size: 10px;">database_forward</a> <a href="/tags/for문/" style="font-size: 10px;">for문</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/javascript/" style="font-size: 16.67px;">javascript</a> <a href="/tags/jpa/" style="font-size: 10px;">jpa</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/star/" style="font-size: 10px;">star</a> <a href="/tags/templateLiteral/" style="font-size: 13.33px;">templateLiteral</a> <a href="/tags/권한부여/" style="font-size: 10px;">권한부여</a> <a href="/tags/그룹질의/" style="font-size: 10px;">그룹질의</a> <a href="/tags/그룹함수/" style="font-size: 10px;">그룹함수</a> <a href="/tags/날짜함수/" style="font-size: 10px;">날짜함수</a> <a href="/tags/명령어/" style="font-size: 10px;">명령어</a> <a href="/tags/문자함수/" style="font-size: 10px;">문자함수</a> <a href="/tags/별찍기/" style="font-size: 10px;">별찍기</a> <a href="/tags/부속질의/" style="font-size: 10px;">부속질의</a> <a href="/tags/뷰/" style="font-size: 10px;">뷰</a> <a href="/tags/숫자함수/" style="font-size: 10px;">숫자함수</a> <a href="/tags/시스템테이블/" style="font-size: 10px;">시스템테이블</a> <a href="/tags/외부조인/" style="font-size: 10px;">외부조인</a> <a href="/tags/인덱스/" style="font-size: 10px;">인덱스</a> <a href="/tags/제약조건/" style="font-size: 10px;">제약조건</a> <a href="/tags/조인질의/" style="font-size: 10px;">조인질의</a> <a href="/tags/집합연산/" style="font-size: 10px;">집합연산</a> <a href="/tags/특수-연산자/" style="font-size: 10px;">특수 연산자</a> <a href="/tags/형변환함수/" style="font-size: 10px;">형변환함수</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 JSH</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    
+    <script>
+    var disqus_shortname = 'onenineix';
+    
+    
+    var disqus_url = 'http://OneNineIx.github.io/2018/11/13/Nodejs-project/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
